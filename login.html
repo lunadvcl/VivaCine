@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход - VivaCine</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('static/background.jpg');
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: white; /* Цвет текста для лучшей читаемости */
+            backdrop-filter: blur(4px); /* Небольшое размытие фона */
+        }
+
+        .login-container {
+            background-color: rgba(0, 0, 0, 0.7); /* Полупрозрачный черный фон */
+            padding: 20px;
+            border-radius: 10px;
+            width: 350px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+            text-align: center;
+        }
+
+        .login-container h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #ffffff; /* Белый цвет заголовка */
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #444; /* Более темная граница для видимости */
+            border-radius: 5px;
+            font-size: 16px;
+            background-color: rgba(255, 255, 255, 0.2); /* Полупрозрачный фон полей */
+            color: #ffffff;
+        }
+
+        .input-group input::placeholder {
+            color: #cccccc; /* Цвет плейсхолдера для улучшенной видимости */
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #ff6f61; /* Яркий цвет кнопки для акцента */
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .login-btn:hover {
+            background-color: #ff5a4c; /* Более тёмный оттенок при наведении */
+        }
+
+        .social-login {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 15px;
+        }
+
+        .social-login img {
+            width: 30px;
+            cursor: pointer;
+        }
+
+        .secondary-links {
+            margin-top: 20px;
+        }
+
+        .secondary-links a {
+            display: block;
+            color: #ff6f61; /* Цвет ссылок для видимости */
+            text-decoration: none;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .secondary-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-container">
+    <h1>VivaCine</h1>
+    <p>Войдите или зарегистрируйтесь</p>
+
+    <div class="input-group">
+        <input type="text" placeholder="Логин или email">
+    </div>
+    <div class="input-group">
+        <input type="password" placeholder="Пароль">
+    </div>
+
+    <button class="login-btn">Войти</button>
+
+    <div class="secondary-links">
+        <a href="/register">Нету аккаунта? Регистрация</a>
+    </div>
+
+    <p>Войти с помощью</p>
+    <div class="social-login">
+        <img src="vk_icon.png" alt="Вконтакте">
+        <img src="google_icon.png" alt="Google">
+        <img src="qr_icon.png" alt="QR-код">
+        <img src="facebook_icon.png" alt="Facebook">
+    </div>
+</div>
+
+</body>
+</html>
