@@ -53,7 +53,7 @@
             transform: scale(1.2);
         }
 
-        /* Контейнер поиска фильмов */
+        /* Контейнер поиска */
         .search-container {
             display: flex;
             flex-direction: column;
@@ -103,6 +103,7 @@
             border-radius: 10px;
             text-align: center;
             transition: transform 0.3s ease;
+            cursor: pointer;
         }
 
         .movie-card img {
@@ -115,6 +116,7 @@
             color: #f5ce0f;
             margin: 10px 0;
         }
+
     </style>
 </head>
 <body>
@@ -136,26 +138,104 @@
 <main>
     <div class="search-container">
         <h1>Поиск фильмов</h1>
-        <input type="text" placeholder="Введите название фильма">
-        <button>Поиск</button>
+        <input type="text" id="searchInput" placeholder="Введите название фильма" oninput="filterMovies()">
+        <button onclick="searchMovies()">Поиск</button>
     </div>
 
-    <section class="movie-grid">
+    <div id="movieGrid" class="movie-grid">
         <!-- Пример карточек фильмов -->
-        <div class="movie-card">
+        <div class="movie-card" onclick="openMoviePage('La Casa de Papel')">
             <img src="https://i.pinimg.com/474x/ca/f9/6a/caf96a1cfcd1310de52060a5b0ea0fcd.jpg" alt="La Casa de Papel">
             <h3>La Casa de Papel</h3>
         </div>
-        <div class="movie-card">
+        <div class="movie-card" onclick="openMoviePage('Pirates of the Caribbean')">
             <img src="https://i.pinimg.com/474x/f3/8b/15/f38b15a1f327e4c6c48f131d1a9cd74d.jpg" alt="Pirates of the Caribbean">
             <h3>Pirates of the Caribbean</h3>
         </div>
-        <div class="movie-card">
+        <div class="movie-card" onclick="openMoviePage('Leon')">
+            <img src="https://i.pinimg.com/736x/8b/94/64/8b94644ef6f0b53b44737ea82e813775.jpg" alt="Leon">
+            <h3>Avatar</h3>
+        </div>
+        <div class="movie-card" onclick="openMoviePage('Leon')">
             <img src="https://i.pinimg.com/474x/cb/14/7c/cb147c47d60961d9293a2b0db943f306.jpg" alt="Leon">
             <h3>Leon</h3>
         </div>
+        <div class="movie-card" onclick="openMoviePage('Leon')">
+            <img src="https://i.pinimg.com/474x/06/a4/e6/06a4e63df2b785eb282bdd9c96835ead.jpg" alt="Leon">
+            <h3>Home Alone </h3>
+        </div>
+        <div class="movie-card" onclick="openMoviePage('Leon')">
+            <img src="https://i.pinimg.com/474x/9a/fa/25/9afa25c0d7e93cb026c86437bb93efa1.jpg" alt="Leon">
+            <h3>Insidious</h3>
+        </div>
+        <div class="movie-card" onclick="openMoviePage('Leon')">
+            <img src="https://i.pinimg.com/736x/2e/13/9c/2e139cb42ed154fc66c52baac174b7b9.jpg" alt="Leon">
+            <h3>Titanic</h3>
+        </div>
+        <div class="movie-card" onclick="openMoviePage('Leon')">
+            <img src="https://i.pinimg.com/564x/4a/31/6e/4a316eb060bbaabc3cb270b19b3407a2.jpg" alt="Leon">
+            <h3>Oppenheimer</h3>
+        </div>
+        <div class="movie-card" onclick="openMoviePage('Leon')">
+            <img src="https://i.pinimg.com/736x/b0/dc/29/b0dc29c8f3a43732a9956a23062ba76e.jpg" alt="Leon">
+            <h3>Ocans's 8</h3>
+        </div>
+        <div class="movie-card" onclick="openMoviePage('Leon')">
+            <img src="https://i.pinimg.com/474x/00/b4/69/00b469fc87bb4e85202f0631a14c9065.jpg" alt="Leon">
+            <h3>Fast and furious</h3>
+        </div>
+        <div class="movie-card" onclick="openMoviePage('Leon')">
+            <img src="https://i.pinimg.com/474x/9b/81/e3/9b81e3f234cf402ab2ea7ee8d8489c3e.jpg" alt="Leon">
+            <h3>Слово пацана</h3>
+        </div>
+        <div class="movie-card" onclick="openMoviePage('Leon')">
+            <img src="https://i.pinimg.com/736x/01/01/c6/0101c6179012640f9fd8ecad12ebc33b.jpg" alt="Leon">
+            <h3>Interstella</h3>
+        </div>
+
         <!-- Добавьте дополнительные карточки фильмов по необходимости -->
-    </section>
+    </div>
+</main>
+
+<script>
+    // Фильтрация фильмов по названию
+    function filterMovies() {
+        const input = document.getElementById('searchInput');
+        const filter = input.value.toLowerCase();
+        const movieCards = document.querySelectorAll('.movie-card');
+        movieCards.forEach(card => {
+            const title = card.querySelector('h3').textContent.toLowerCase();
+            if (title.includes(filter)) {
+                card.style.display = '';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+
+    // Открытие страницы фильма (заглушка)
+    function openMoviePage(movieName) {
+        alert('Открытие страницы фильма: ' + movieName);
+    }
+
+    // Поиск фильмов (будет выполнен по клику на кнопку)
+    function searchMovies() {
+        const searchQuery = document.getElementById('searchInput').value.toLowerCase();
+        const movieCards = document.querySelectorAll('.movie-card');
+        movieCards.forEach(card => {
+            const title = card.querySelector('h3').textContent.toLowerCase();
+            if (title.includes(searchQuery)) {
+                card.style.display = '';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+</script>
+
+</body>
+</html>
+
 </main>
 
 </body>
