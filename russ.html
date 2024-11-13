@@ -5,23 +5,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Слово пацана</title>
     <style>
-        /* Общие стили страницы */
         body {
             margin: 0;
             padding: 0;
-            background-color: black; /* Черный фон */
-            color: white; /* Белый текст */
+            background-color: black;
+            color: white;
             font-family: Arial, sans-serif;
             text-align: center;
             position: relative;
         }
 
-        /* Стили для контейнера с GIF'ами */
+        .top-bar {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .top-bar a, .top-bar button {
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-back-home {
+            background-color: #012a59;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        .btn-back-home:hover {
+            background-color: #434f5e;
+        }
+
+        .control-btn {
+            background: none;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            padding: 0;
+        }
+
         #gif-container {
             display: flex;
             overflow: hidden;
             width: 100%;
-            height: 70vh; /* Высота GIF'ов на 80% экрана */
+            height: 70vh;
             justify-content: center;
             align-items: center;
         }
@@ -29,40 +64,20 @@
         .gif {
             width: 100%;
             height: auto;
-            display: none;  /* Все GIF'ы скрыты изначально */
+            display: none;
         }
 
         .gif.active {
-            display: block;  /* Показываем активный GIF */
+            display: block;
         }
 
-        /* Стили для кнопки "На главную" */
-        .btn-back-home {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background-color: #432c0a;
-            color: #ffffff;
-            font-size: 18px;
-            font-weight: bold;
-            padding: 10px 20px;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-
-        .btn-back-home:hover {
-            background-color: #a36f1a;
-        }
-
-        /* Стили для контента */
         .content {
             padding: 20px;
             font-size: 18px;
             line-height: 1.6;
             max-width: 800px;
             margin: 20px auto;
-            text-align: left; /* Выравнивание текста слева */
+            text-align: left;
         }
 
         h1, h2 {
@@ -75,77 +90,106 @@
             padding: 10px;
             background-color: #000000;
         }
-
-        /* Стили для подробностей фильма */
-        .details {
-            margin-top: 20px;
-        }
-
-        .details li {
-            margin-bottom: 10px;
-        }
-
     </style>
 </head>
 <body>
 
-    <!-- Кнопка, ведущая на главную страницу -->
-   <a href="{{ url_for('index') }}" class="btn-back-home">Home</a>
-        <a href="{{ url_for('genres') }}" class="btn-back-home">Genres</a>
-    <!-- Контейнер для GIF'ов -->
-   <div id="gif-container">
+<div class="top-bar">
+    <a href="{{ url_for('index') }}" class="btn-back-home">Home</a>
+    <a href="{{ url_for('genres') }}" class="btn-back-home">Genres</a>
+    <button class="control-btn" onclick="togglePlay()">Soundtrack ♬</button>
+</div>
+
+<!-- Контейнер для GIF'ов -->
+<div id="gif-container">
     <img class="gif" src="https://proprikol.ru/wp-content/uploads/2023/12/animirovannyj-nabor-stikerov-slovo-paczana-4.gif" alt="La Casa de Papel" />
     <img class="gif" src=" https://proprikol.ru/wp-content/uploads/2023/12/animirovannyj-nabor-stikerov-slovo-paczana-6.gif" alt="La Casa de Papel 2" />
     <img class="gif" src=" https://proprikol.ru/wp-content/uploads/2023/12/animirovannyj-nabor-stikerov-slovo-paczana-10.gif" alt="La Casa de Papel 3" />
     <img class="gif" src="https://proprikol.ru/wp-content/uploads/2023/12/animirovannyj-nabor-stikerov-slovo-paczana-52.gif" alt="La Casa de Papel 4" />
     <img class="gif" src="https://proprikol.ru/wp-content/uploads/2023/12/animirovannyj-nabor-stikerov-slovo-paczana-56.gif" alt="La Casa de Papel 5" />
 </div>
+<div class="content">
+    <header>
+        <h1>Слово пацана</h1>
+    </header>
 
-    <!-- Контент страницы -->
-    <div class="content">
-        <header>
-            <h1>La Casa de Papel</h1>
-        </header>
+    <section>
+        <h2>Описание фильма</h2>
+        <p>La Casa de Papel — испанский криминальный телесериал...</p>
+    </section>
 
-        <section>
-            <h2>Описание фильма</h2>
-            <p>La Casa de Papel — испанский криминальный телесериал, рассказывающий историю группы преступников, которые планируют крупнейшее ограбление в истории Испании. Сериал привлек внимание зрителей своим напряжённым сюжетом, яркими персонажами и непредсказуемыми поворотами.</p>
-        </section>
+    <section class="details">
+        <h2>Подробности</h2>
+        <ul>
+            <li><strong>Жанр:</strong> Криминал, Драма</li>
+            <li><strong>Рейтинг:</strong> 8.3/10 (IMDb)</li>
+            <li><strong>Год выпуска:</strong> 2017</li>
+            <li><strong>Сезоны:</strong> 5</li>
+        </ul>
+    </section>
+</div>
 
-        <section class="details">
-            <h2>Подробности</h2>
-            <ul>
-                <li><strong>Жанр:</strong> Криминал, Драма</li>
-                <li><strong>Рейтинг:</strong> 8.3/10 (IMDb)</li>
-                <li><strong>Год выпуска:</strong> 2017</li>
-                <li><strong>Сезоны:</strong> 5</li>
-            </ul>
-        </section>
-    </div>
+<footer>
+    <p>&copy; 2024 Ваш сайт. Все права защищены.</p>
+</footer>
 
-    <!-- Футер -->
-    <footer>
-        <p>&copy; 2024 Ваш сайт. Все права защищены.</p>
-    </footer>
+<iframe id="audio" width="0" height="0" src="https://www.youtube.com/embed/Km8n0zmJ0r0?autoplay=1&enablejsapi=1" allow="autoplay" frameborder="0"></iframe>
 
-    <script>
-        // Массив с ссылками на все GIF'ы
-        const gifs = document.querySelectorAll('.gif');
-        let currentGifIndex = 0;
+<script>
+    let player;
+    let isPlaying = false;
 
-        // Функция для переключения GIF'ов
-        function showNextGif() {
-            gifs[currentGifIndex].classList.remove('active'); // Скрываем текущий GIF
-            currentGifIndex = (currentGifIndex + 1) % gifs.length; // Переходим к следующему GIF, после последнего снова возвращаемся к первому
-            gifs[currentGifIndex].classList.add('active'); // Показываем следующий GIF
+    // Инициализация YouTube Player API
+    function onYouTubeIframeAPIReady() {
+        player = new YT.Player('audio', {
+            events: {
+                'onReady': onPlayerReady,
+                'onStateChange': onPlayerStateChange
+            }
+        });
+    }
+
+    function onPlayerReady(event) {
+        console.log('Player Ready');
+    }
+
+    function onPlayerStateChange(event) {
+        if (event.data === YT.PlayerState.PLAYING) {
+            isPlaying = true;
+        } else if (event.data === YT.PlayerState.PAUSED) {
+            isPlaying = false;
         }
+    }
 
-        // Инициализация первого GIF
-        gifs[currentGifIndex].classList.add('active');
+    // Воспроизведение и пауза с сохранением позиции
+    function togglePlay() {
+        if (player) {
+            if (isPlaying) {
+                player.pauseVideo();
+            } else {
+                player.playVideo();
+            }
+        }
+    }
 
-        // Интервал для переключения GIF'ов (например, каждые 3 секунды)
-        setInterval(showNextGif, 3000);
-    </script>
+    // Загрузка API YouTube
+    const script = document.createElement('script');
+    script.src = "https://www.youtube.com/iframe_api";
+    document.body.appendChild(script);
+
+    // Автозапуск GIF
+    const gifs = document.querySelectorAll('.gif');
+    let currentGifIndex = 0;
+
+    function showNextGif() {
+        gifs[currentGifIndex].classList.remove('active'); // Убираем активный класс с текущего GIF
+        currentGifIndex = (currentGifIndex + 1) % gifs.length; // Переходим к следующему GIF
+        gifs[currentGifIndex].classList.add('active'); // Добавляем активный класс к следующему GIF
+    }
+
+    gifs[currentGifIndex].classList.add('active'); // Делаем первый GIF активным
+    setInterval(showNextGif, 3000); // Переключаем GIF каждые 3 секунды
+</script>
 
 </body>
 </html>
