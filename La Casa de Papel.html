@@ -98,7 +98,6 @@
         <a href="{{ url_for('index') }}" class="btn-back-home">Home</a>
         <a href="{{ url_for('genres') }}" class="btn-back-home">Genres</a>
         <button class="control-btn" onclick="togglePlay()">Soundtrack ♬</button>
-
     </div>
 
     <div id="gif-container">
@@ -134,7 +133,7 @@
         <p>&copy; 2024 Ваш сайт. Все права защищены.</p>
     </footer>
 
-    <!-- Встроенный YouTube аудио -->
+     <!-- Встроенный YouTube аудио -->
     <iframe id="audio" width="0" height="0" src="https://www.youtube.com/embed/ehZFyxRbyd0?autoplay=1&enablejsapi=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
     <script>
@@ -176,13 +175,6 @@
             }
         }
 
-        // Функция для включения/выключения звука
-        function toggleMute() {
-            if (player) {
-                player.isMuted() ? player.unMute() : player.mute();
-            }
-        }
-
         // Загружаем API YouTube
         var script = document.createElement('script');
         script.src = "https://www.youtube.com/iframe_api";
@@ -203,6 +195,7 @@
     </script>
 </body>
 </html>
+
 
 
 
