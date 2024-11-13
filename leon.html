@@ -16,12 +16,51 @@
             position: relative;
         }
 
-        /* Стили для контейнера с GIF'ами */
+        /* Стили для верхнего меню */
+        .top-bar {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .top-bar a, .top-bar button {
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-back-home {
+            background-color: #012a59;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        .btn-back-home:hover {
+            background-color: #434f5e;
+        }
+
+        /* Кнопки без фона */
+        .control-btn {
+            background: none;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            padding: 0;
+        }
+
+        /* Контейнер для GIF'ов */
         #gif-container {
             display: flex;
             overflow: hidden;
             width: 100%;
-            height: 70vh; /* Высота GIF'ов на 80% экрана */
+            height: 70vh;
             justify-content: center;
             align-items: center;
         }
@@ -34,25 +73,6 @@
 
         .gif.active {
             display: block;  /* Показываем активный GIF */
-        }
-
-        /* Стили для кнопки "На главную" */
-        .btn-back-home {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background-color: #432c0a;
-            color: #ffffff;
-            font-size: 18px;
-            font-weight: bold;
-            padding: 10px 20px;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-
-        .btn-back-home:hover {
-            background-color: #a36f1a;
         }
 
         /* Стили для контента */
@@ -75,36 +95,31 @@
             padding: 10px;
             background-color: #000000;
         }
-
-        /* Стили для подробностей фильма */
-        .details {
-            margin-top: 20px;
-        }
-
-        .details li {
-            margin-bottom: 10px;
-        }
-
     </style>
 </head>
 <body>
 
-    <!-- Кнопка, ведущая на главную страницу -->
-    <a href="{{ url_for('index') }}" class="btn-back-home">Home</a>
+    <!-- Верхняя панель с кнопками -->
+    <div class="top-bar">
+        <a href="{{ url_for('index') }}" class="btn-back-home">Home</a>
         <a href="{{ url_for('genres') }}" class="btn-back-home">Genres</a>
-    <!-- Контейнер для GIF'ов -->
-    <div id="gif-container">
-        <img class="gif" src="https://i.pinimg.com/originals/f6/8a/21/f68a2120d069b2d8a0723a07ba85ec74.gif" alt="La Casa de Papel" />
-        <img class="gif" src="https://i.pinimg.com/originals/8e/7e/16/8e7e16287b0b7790d1409f4c053f152b.gif" alt="La Casa de Papel 2" />
-        <img class="gif" src="https://i.pinimg.com/originals/31/9e/0e/319e0e7326664fe1dbbc7ada1da93734.gif" alt="La Casa de Papel 3" />
-        <img class="gif" src="https://i.pinimg.com/originals/62/da/8c/62da8cb3ef4239aeab2c63f9d17e6ec4.gif" alt="La Casa de Papel 4" />
-        <img class="gif" src="https://i.pinimg.com/originals/9b/33/c6/9b33c67531b6dfd51d37599a6943e829.gif" alt="La Casa de Papel 5" />
+        <button class="control-btn" onclick="togglePlay()">Soundtrack ♬</button>
     </div>
+
+    <!-- Контейнер для GIF'ов -->
+     <div id="gif-container">
+    <img class="gif" src="https://i.pinimg.com/originals/f6/8a/21/f68a2120d069b2d8a0723a07ba85ec74.gif" alt="La Casa de Papel" />
+    <img class="gif" src="https://i.pinimg.com/originals/8e/7e/16/8e7e16287b0b7790d1409f4c053f152b.gif" alt="La Casa de Papel 2" />
+    <img class="gif" src="https://i.pinimg.com/originals/31/9e/0e/319e0e7326664fe1dbbc7ada1da93734.gif" alt="La Casa de Papel 3" />
+    <img class="gif" src="https://99px.ru/sstorage/86/2015/07/image_862607150859102791319.gif" alt="La Casa de Papel 4" />
+    <img class="gif" src="https://64.media.tumblr.com/d04325f4f6192fdaac06c33f52db0199/tumblr_pu16frglqi1v6w3juo1_500.gifv" alt="La Casa de Papel 5" />
+</div>
+
 
     <!-- Контент страницы -->
     <div class="content">
         <header>
-            <h1>La Casa de Papel</h1>
+            <h1>Leon</h1>
         </header>
 
         <section>
@@ -128,24 +143,38 @@
         <p>&copy; 2024 Ваш сайт. Все права защищены.</p>
     </footer>
 
-    <script>
-        // Массив с ссылками на все GIF'ы
-        const gifs = document.querySelectorAll('.gif');
-        let currentGifIndex = 0;
+  <!-- Встроенный YouTube аудио -->
+<iframe id="audio" width="0" height="0" src="https://www.youtube.com/embed/QK-Z1K67uaA?autoplay=1" allow="autoplay"></iframe>
 
-        // Функция для переключения GIF'ов
-        function showNextGif() {
-            gifs[currentGifIndex].classList.remove('active'); // Скрываем текущий GIF
-            currentGifIndex = (currentGifIndex + 1) % gifs.length; // Переходим к следующему GIF, после последнего снова возвращаемся к первому
-            gifs[currentGifIndex].classList.add('active'); // Показываем следующий GIF
+
+    <script>
+        // Функция для управления воспроизведением и паузой
+        function togglePlay() {
+            const audio = document.getElementById('audio');
+            if (audio.src.includes('autoplay=1')) {
+                audio.src = audio.src.replace('autoplay=1', 'autoplay=0');
+            } else {
+                audio.src = audio.src.replace('autoplay=0', 'autoplay=1');
+            }
         }
 
-        // Инициализация первого GIF
-        gifs[currentGifIndex].classList.add('active');
+        // Функция для включения и выключения звука
+        function toggleMute() {
+            const audio = document.getElementById('audio');
+            audio.muted = !audio.muted;
+        }
 
-        // Интервал для переключения GIF'ов (например, каждые 3 секунды)
+        // Автозапуск GIF
+        const gifs = document.querySelectorAll('.gif');
+        let currentGifIndex = 0;
+        function showNextGif() {
+            gifs[currentGifIndex].classList.remove('active');
+            currentGifIndex = (currentGifIndex + 1) % gifs.length;
+            gifs[currentGifIndex].classList.add('active');
+        }
+        gifs[currentGifIndex].classList.add('active');
         setInterval(showNextGif, 3000);
     </script>
-
 </body>
 </html>
+
