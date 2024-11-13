@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interstellar</title>
+    <title>Interstella</title>
     <style>
         /* Общие стили страницы */
         body {
@@ -37,13 +37,13 @@
         }
 
         .btn-back-home {
-            background-color: #910000;
+            background-color: #042278;
             border-radius: 5px;
             text-decoration: none;
         }
 
         .btn-back-home:hover {
-            background-color: #371d00;
+            background-color: #434f5e;
         }
 
         /* Кнопки без фона */
@@ -107,18 +107,20 @@
     </div>
 
     <!-- Контейнер для GIF'ов -->
+        <!-- Контейнер для GIF'ов -->
+ <!-- Контейнер для GIF'ов -->
     <div id="gif-container">
         <img class="gif" src="https://i.pinimg.com/originals/48/46/bf/4846bf31cab6074b64dc2f5235664cef.gif" alt="La Casa de Papel" />
         <img class="gif" src="https://i.pinimg.com/originals/b2/1b/27/b21b2778f71f46661134fe4f0068c647.gif" alt="La Casa de Papel 2" />
         <img class="gif" src="https://i.pinimg.com/originals/2f/9b/2d/2f9b2dbbd14d46649beeacd53500ad66.gif" alt="La Casa de Papel 3" />
         <img class="gif" src="https://i.pinimg.com/originals/b9/4f/bf/b94fbfbb2aa9061a9a3d91e11614ab48.gif" alt="La Casa de Papel 4" />
-        <img class="gif" src="https://i.pinimg.com/originals/f1/0a/aa/f10aaaaac59f9724d8fe8276f3d6a91f.gif" alt="La Casa de Papel 5" />
+        <img class="gif" src="https://i.pinimg.com/originals/82/37/14/823714bb8d018d2c3bf534dc00721ff6.gif" alt="La Casa de Papel 5" />
     </div>
 
     <!-- Контент страницы -->
     <div class="content">
         <header>
-            <h1>Interstellar</h1>
+            <h1>Interstella</h1>
         </header>
 
         <section>
@@ -142,38 +144,64 @@
         <p>&copy; 2024 Ваш сайт. Все права защищены.</p>
     </footer>
 
-    <!-- Встроенный YouTube аудио -->
-<iframe id="audio" width="0" height="0" src="https://www.youtube.com/embed/8kooIgKESYE?autoplay=1" allow="autoplay"></iframe>
+  <iframe id="audio" width="0" height="0" src="https://www.youtube.com/embed/UDVtMYqUAyw?autoplay=1&enablejsapi=1" allow="autoplay" frameborder="0"></iframe>
 
 
+   <script>
+    let player;
+    let isPlaying = false;
 
-    <script>
-        // Функция для управления воспроизведением и паузой
-        function togglePlay() {
-            const audio = document.getElementById('audio');
-            if (audio.src.includes('autoplay=1')) {
-                audio.src = audio.src.replace('autoplay=1', 'autoplay=0');
+    // Инициализация YouTube Player API
+    function onYouTubeIframeAPIReady() {
+        player = new YT.Player('audio', {
+            events: {
+                'onReady': onPlayerReady,
+                'onStateChange': onPlayerStateChange
+            }
+        });
+    }
+
+    function onPlayerReady(event) {
+        console.log('Player Ready');
+    }
+
+    function onPlayerStateChange(event) {
+        if (event.data === YT.PlayerState.PLAYING) {
+            isPlaying = true;
+        } else if (event.data === YT.PlayerState.PAUSED) {
+            isPlaying = false;
+        }
+    }
+
+    // Воспроизведение и пауза с сохранением позиции
+    function togglePlay() {
+        if (player) {
+            if (isPlaying) {
+                player.pauseVideo();
             } else {
-                audio.src = audio.src.replace('autoplay=0', 'autoplay=1');
+                player.playVideo();
             }
         }
+    }
 
-        // Функция для включения и выключения звука
-        function toggleMute() {
-            const audio = document.getElementById('audio');
-            audio.muted = !audio.muted;
-        }
+    // Загрузка API YouTube
+    const script = document.createElement('script');
+    script.src = "https://www.youtube.com/iframe_api";
+    document.body.appendChild(script);
 
-        // Автозапуск GIF
-        const gifs = document.querySelectorAll('.gif');
-        let currentGifIndex = 0;
-        function showNextGif() {
-            gifs[currentGifIndex].classList.remove('active');
-            currentGifIndex = (currentGifIndex + 1) % gifs.length;
-            gifs[currentGifIndex].classList.add('active');
-        }
-        gifs[currentGifIndex].classList.add('active');
-        setInterval(showNextGif, 3000);
-    </script>
+    // Автозапуск GIF
+    const gifs = document.querySelectorAll('.gif');
+    let currentGifIndex = 0;
+
+    function showNextGif() {
+        gifs[currentGifIndex].classList.remove('active'); // Убираем активный класс с текущего GIF
+        currentGifIndex = (currentGifIndex + 1) % gifs.length; // Переходим к следующему GIF
+        gifs[currentGifIndex].classList.add('active'); // Добавляем активный класс к следующему GIF
+    }
+
+    gifs[currentGifIndex].classList.add('active'); // Делаем первый GIF активным
+    setInterval(showNextGif, 3000); // Переключаем GIF каждые 3 секунды
+</script>
+
 </body>
 </html>
