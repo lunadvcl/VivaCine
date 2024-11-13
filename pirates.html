@@ -5,18 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pirates of the Caribbean</title>
     <style>
-        /* Общие стили страницы */
         body {
             margin: 0;
             padding: 0;
-            background-color: black; /* Черный фон */
-            color: white; /* Белый текст */
+            background-color: black;
+            color: white;
             font-family: Arial, sans-serif;
             text-align: center;
             position: relative;
         }
 
-        /* Стили для верхнего меню */
         .top-bar {
             position: absolute;
             top: 20px;
@@ -46,7 +44,6 @@
             background-color: #434f5e;
         }
 
-        /* Кнопки без фона */
         .control-btn {
             background: none;
             font-weight: bold;
@@ -55,7 +52,6 @@
             padding: 0;
         }
 
-        /* Контейнер для GIF'ов */
         #gif-container {
             display: flex;
             overflow: hidden;
@@ -68,21 +64,20 @@
         .gif {
             width: 100%;
             height: auto;
-            display: none;  /* Все GIF'ы скрыты изначально */
+            display: none;
         }
 
         .gif.active {
-            display: block;  /* Показываем активный GIF */
+            display: block;
         }
 
-        /* Стили для контента */
         .content {
             padding: 20px;
             font-size: 18px;
             line-height: 1.6;
             max-width: 800px;
             margin: 20px auto;
-            text-align: left; /* Выравнивание текста слева */
+            text-align: left;
         }
 
         h1, h2 {
@@ -99,15 +94,14 @@
 </head>
 <body>
 
-    <!-- Верхняя панель с кнопками -->
-    <div class="top-bar">
-        <a href="{{ url_for('index') }}" class="btn-back-home">Home</a>
-        <a href="{{ url_for('genres') }}" class="btn-back-home">Genres</a>
-        <button class="control-btn" onclick="togglePlay()">Soundtrack ♬</button>
-    </div>
+<div class="top-bar">
+    <a href="{{ url_for('index') }}" class="btn-back-home">Home</a>
+    <a href="{{ url_for('genres') }}" class="btn-back-home">Genres</a>
+    <button class="control-btn" onclick="togglePlay()">Soundtrack ♬</button>
+</div>
 
-    <!-- Контейнер для GIF'ов -->
-     <div id="gif-container">
+<!-- Контейнер для GIF'ов -->
+ <div id="gif-container">
     <img class="gif" src="https://i.pinimg.com/originals/20/f0/d5/20f0d5c0d4945a8d403b84553a09274e.gif" alt="La Casa de Papel" />
     <img class="gif" src="https://i.pinimg.com/originals/d5/98/a4/d598a4c5153cb1e3b6e477ae8a1902ef.gif" alt="La Casa de Papel 2" />
     <img class="gif" src="https://i.pinimg.com/originals/df/fe/e2/dffee213c8c89ab1e825441686018a03.gif" alt="La Casa de Papel 3" />
@@ -115,65 +109,90 @@
     <img class="gif" src="https://i.pinimg.com/originals/ff/eb/97/ffeb97d2788ea427fee3a078a0c85604.gif" alt="La Casa de Papel 5" />
 </div>
 
-    <!-- Контент страницы -->
-    <div class="content">
-        <header>
-            <h1>Titanic</h1>
-        </header>
+<div class="content">
+    <header>
+        <h1>Pirates of the Caribbean</h1>
+    </header>
 
-        <section>
-            <h2>Описание фильма</h2>
-            <p>La Casa de Papel — испанский криминальный телесериал, рассказывающий историю группы преступников, которые планируют крупнейшее ограбление в истории Испании. Сериал привлек внимание зрителей своим напряжённым сюжетом, яркими персонажами и непредсказуемыми поворотами.</p>
-        </section>
+    <section>
+        <h2>Описание фильма</h2>
+        <p>La Casa de Papel — испанский криминальный телесериал...</p>
+    </section>
 
-        <section class="details">
-            <h2>Подробности</h2>
-            <ul>
-                <li><strong>Жанр:</strong> Криминал, Драма</li>
-                <li><strong>Рейтинг:</strong> 8.3/10 (IMDb)</li>
-                <li><strong>Год выпуска:</strong> 2017</li>
-                <li><strong>Сезоны:</strong> 5</li>
-            </ul>
-        </section>
-    </div>
+    <section class="details">
+        <h2>Подробности</h2>
+        <ul>
+            <li><strong>Жанр:</strong> Криминал, Драма</li>
+            <li><strong>Рейтинг:</strong> 8.3/10 (IMDb)</li>
+            <li><strong>Год выпуска:</strong> 2017</li>
+            <li><strong>Сезоны:</strong> 5</li>
+        </ul>
+    </section>
+</div>
 
-    <!-- Футер -->
-    <footer>
-        <p>&copy; 2024 Ваш сайт. Все права защищены.</p>
-    </footer>
+<footer>
+    <p>&copy; 2024 Ваш сайт. Все права защищены.</p>
+</footer>
 
-    <!-- Встроенный YouTube аудио -->
-<iframe id="audio" width="0" height="0" src="https://www.youtube.com/embed/aeBsl8feQao?autoplay=1" allow="autoplay"></iframe>
+<!-- Встроенный YouTube аудио -->
+<iframe id="audio" width="0" height="0" src="https://www.youtube.com/embed/aeBsl8feQao?si=NFjbkrlhiPo8jXPQ&autoplay=1&mute=0&enablejsapi=1" allow="autoplay"></iframe>
 
+<script>
+    let player;
+    let isPlaying = false;
 
-    <script>
-        // Функция для управления воспроизведением и паузой
-        function togglePlay() {
-            const audio = document.getElementById('audio');
-            if (audio.src.includes('autoplay=1')) {
-                audio.src = audio.src.replace('autoplay=1', 'autoplay=0');
+    // Инициализация YouTube Player API
+    function onYouTubeIframeAPIReady() {
+        player = new YT.Player('audio', {
+            events: {
+                'onReady': onPlayerReady,
+                'onStateChange': onPlayerStateChange
+            }
+        });
+    }
+
+    function onPlayerReady(event) {
+        console.log('Player Ready');
+    }
+
+    function onPlayerStateChange(event) {
+        if (event.data === YT.PlayerState.PLAYING) {
+            isPlaying = true;
+        } else if (event.data === YT.PlayerState.PAUSED) {
+            isPlaying = false;
+        }
+    }
+
+    // Воспроизведение и пауза с сохранением позиции
+    function togglePlay() {
+        if (player) {
+            if (isPlaying) {
+                player.pauseVideo();
             } else {
-                audio.src = audio.src.replace('autoplay=0', 'autoplay=1');
+                player.playVideo();
             }
         }
+    }
 
-        // Функция для включения и выключения звука
-        function toggleMute() {
-            const audio = document.getElementById('audio');
-            audio.muted = !audio.muted;
-        }
+    // Загрузка API YouTube
+    const script = document.createElement('script');
+    script.src = "https://www.youtube.com/iframe_api";
+    document.body.appendChild(script);
 
-        // Автозапуск GIF
-        const gifs = document.querySelectorAll('.gif');
-        let currentGifIndex = 0;
-        function showNextGif() {
-            gifs[currentGifIndex].classList.remove('active');
-            currentGifIndex = (currentGifIndex + 1) % gifs.length;
-            gifs[currentGifIndex].classList.add('active');
-        }
-        gifs[currentGifIndex].classList.add('active');
-        setInterval(showNextGif, 3000);
-    </script>
+    // Автозапуск GIF
+    const gifs = document.querySelectorAll('.gif');
+    let currentGifIndex = 0;
+
+    function showNextGif() {
+        gifs[currentGifIndex].classList.remove('active'); // Убираем активный класс с текущего GIF
+        currentGifIndex = (currentGifIndex + 1) % gifs.length; // Переходим к следующему GIF
+        gifs[currentGifIndex].classList.add('active'); // Добавляем активный класс к следующему GIF
+    }
+
+    gifs[currentGifIndex].classList.add('active'); // Делаем первый GIF активным
+    setInterval(showNextGif, 3000); // Переключаем GIF каждые 3 секунды
+</script>
+
 </body>
 </html>
 
