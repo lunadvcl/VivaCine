@@ -1,7 +1,162 @@
-<!-- templates/search.html -->
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Поиск фильмов</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lastra&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Основные стили */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: black;
+            color: white;
+            font-family: 'Lastra', serif;
+        }
 
-{% block content %}
-<h1>Поиск фильмов</h1>
-<!-- Форма поиска или другие элементы для поиска фильмов -->
-{% endblock %}
+        /* Навигация */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #000;
+            z-index: 1000;
+            padding: 10px 0;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style-type: none;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+        }
+
+        nav ul li {
+            margin: 0 20px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: bold;
+            padding: 15px 25px;
+            transition: all 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            background: linear-gradient(45deg, #d89b1d, #ff8c00);
+            color: black;
+            transform: scale(1.2);
+        }
+
+        /* Контейнер поиска фильмов */
+        .search-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 80px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .search-container input[type="text"] {
+            width: 80%;
+            padding: 10px;
+            font-size: 18px;
+            border-radius: 5px;
+            border: none;
+            margin-bottom: 20px;
+        }
+
+        .search-container button {
+            padding: 10px 20px;
+            font-size: 18px;
+            color: white;
+            background-color: #e85e00;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-container button:hover {
+            background-color: #d89b1d;
+        }
+
+        /* Сетка фильмов */
+        .movie-grid {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 20px;
+        }
+
+        .movie-card {
+            background-color: #333;
+            width: 200px;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .movie-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .movie-card h3 {
+            color: #f5ce0f;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('genres') }}">Genres</a></li>
+            <li><a href="{{ url_for('categories') }}">Categories</a></li>
+            <li><a href="{{ url_for('library') }}">Library</a></li>
+            <li><a href="{{ url_for('personal') }}">For Me</a></li>
+            <li><a href="{{ url_for('search') }}">Search Movies</a></li>
+            <li><a href="{{ url_for('profile') }}">My Account</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <div class="search-container">
+        <h1>Поиск фильмов</h1>
+        <input type="text" placeholder="Введите название фильма">
+        <button>Поиск</button>
+    </div>
+
+    <section class="movie-grid">
+        <!-- Пример карточек фильмов -->
+        <div class="movie-card">
+            <img src="https://i.pinimg.com/474x/ca/f9/6a/caf96a1cfcd1310de52060a5b0ea0fcd.jpg" alt="La Casa de Papel">
+            <h3>La Casa de Papel</h3>
+        </div>
+        <div class="movie-card">
+            <img src="https://i.pinimg.com/474x/f3/8b/15/f38b15a1f327e4c6c48f131d1a9cd74d.jpg" alt="Pirates of the Caribbean">
+            <h3>Pirates of the Caribbean</h3>
+        </div>
+        <div class="movie-card">
+            <img src="https://i.pinimg.com/474x/cb/14/7c/cb147c47d60961d9293a2b0db943f306.jpg" alt="Leon">
+            <h3>Leon</h3>
+        </div>
+        <!-- Добавьте дополнительные карточки фильмов по необходимости -->
+    </section>
+</main>
+
+</body>
+</html>
