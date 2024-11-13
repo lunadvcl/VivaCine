@@ -35,13 +35,13 @@
         }
 
         .btn-back-home {
-            background-color: #910000;
+            background-color: #4e0808;
             border-radius: 5px;
             text-decoration: none;
         }
 
         .btn-back-home:hover {
-            background-color: #371d00;
+            background-color: #7e5454;
         }
 
         .control-btn {
@@ -108,7 +108,6 @@
     <img class="gif" src="https://i.pinimg.com/originals/73/67/bd/7367bdfac974e72436a5f3384c026346.gif" alt="La Casa de Papel 4" />
     <img class="gif" src="https://media1.giphy.com/media/1wmMROoySgxnmsvlHN/200.gif?cid=6c09b952uwj0hjyjjcexrqkvvd1vtf6rlb6bnjznrmvfduvb&ep=v1_internal_gif_by_id&rid=200.gif&ct=g" alt="La Casa de Papel 5" />
 </div>
-
 <div class="content">
     <header>
         <h1>Ocean's 8</h1>
@@ -134,44 +133,50 @@
     <p>&copy; 2024 Ваш сайт. Все права защищены.</p>
 </footer>
 
-<!-- Встроенный YouTube аудио -->
-<div id="player"></div>
+<iframe id="audio" width="0" height="0" src="https://www.youtube.com/embed/lF9TZoGWJpY?autoplay=1&enablejsapi=1" allow="autoplay" frameborder="0"></iframe>
+
 
 <script>
-    // Загрузка YouTube API
+    let player;
+    let isPlaying = false;
+
+    // Инициализация YouTube Player API
     function onYouTubeIframeAPIReady() {
-        player = new YT.Player('player', {
-            videoId: 'lF9TZoGWJpY', // ID видео на YouTube
+        player = new YT.Player('audio', {
             events: {
+                'onReady': onPlayerReady,
                 'onStateChange': onPlayerStateChange
             }
         });
     }
 
-    // Функция для отслеживания изменений состояния плеера
-    let isPlaying = false;
-    let currentTime = 0;
+    function onPlayerReady(event) {
+        console.log('Player Ready');
+    }
 
     function onPlayerStateChange(event) {
-        if (event.data == YT.PlayerState.PLAYING) {
+        if (event.data === YT.PlayerState.PLAYING) {
             isPlaying = true;
-        } else if (event.data == YT.PlayerState.PAUSED) {
+        } else if (event.data === YT.PlayerState.PAUSED) {
             isPlaying = false;
-            currentTime = player.getCurrentTime();
         }
     }
 
-    // Функция для переключения воспроизведения/паузы
+    // Воспроизведение и пауза с сохранением позиции
     function togglePlay() {
-        if (isPlaying) {
-            player.pauseVideo();
-        } else {
-            if (currentTime > 0) {
-                player.seekTo(currentTime);
+        if (player) {
+            if (isPlaying) {
+                player.pauseVideo();
+            } else {
+                player.playVideo();
             }
-            player.playVideo();
         }
     }
+
+    // Загрузка API YouTube
+    const script = document.createElement('script');
+    script.src = "https://www.youtube.com/iframe_api";
+    document.body.appendChild(script);
 
     // Автозапуск GIF
     const gifs = document.querySelectorAll('.gif');
@@ -185,11 +190,7 @@
 
     gifs[currentGifIndex].classList.add('active'); // Делаем первый GIF активным
     setInterval(showNextGif, 3000); // Переключаем GIF каждые 3 секунды
-
 </script>
-
-<!-- Подключение YouTube API -->
-<script src="https://www.youtube.com/iframe_api"></script>
 
 </body>
 </html>
