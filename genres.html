@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genres - VivaCine</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lastra&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* General styles */
+        html, body {
+            font-family: 'Lastra', serif;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background-color: #000; /* Черный фон */
+            color: #fff; /* Белый текст для контраста */
+        }
+        header {
+            background-color: #000;
+            padding: 45px 0;
+        }
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #000; /* Задайте нужный цвет фона */
+            z-index: 1000; /* Чтобы панель оставалась над остальными элементами */
+            padding: 10px 0;
+        }
+
+        body {
+            padding-top: 60px; /* Отступ сверху, чтобы контент не скрывался под навигационной панелью */
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style-type: none;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+        }
+        nav ul li {
+            margin: 0 20px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: bold;
+            padding: 15px 25px;
+            transition: all 0.3s ease;
+        }
+        nav ul li a:hover {
+            background: linear-gradient(45deg, #d89b1d, #ff8c00);
+            color: black;
+            transform: scale(1.2);
+        }
+
+        /* Page specific styles */
+        .genres-background {
+            background-image: url('/static/genres-background.jpg'); /* Обнови путь к фону */
+            background-size: cover;
+            background-position: center;
+            height: 70vh;
+            position: relative;
+        }
+        .center-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #ffffff;
+        }
+        h1, h2 {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            font-weight: bolder;
+            font-size: 50px;
+            color: #f5ce0f;
+        }
+        h1 {
+            font-size: 50px;
+        }
+
+        /* Genre catalog */
+        .genre-catalog {
+            padding: 40px;
+            text-align: center;
+            font-family: 'Arial', sans-serif;
+        }
+        .genre-catalog h2 {
+            color: #f5ce0f; /* Цвет заголовка */
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        .genre-grid {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .genre-card {
+            background-color: #020202;
+            width: 280px;
+            height: 400px;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .genre-card img {
+            width: 100%;
+            height: 80%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .genre-card:hover img {
+            transform: scale(1.1);
+        }
+        .genre-card h3 {
+            font-size: 24px;
+            color: #f5ce0f;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('genres') }}">Genres</a></li>
+            <li><a href="{{ url_for('categories') }}">Categories</a></li>
+            <li><a href="{{ url_for('library') }}">Library</a></li>
+            <li><a href="{{ url_for('personal') }}">For Me</a></li>
+            <li><a href="{{ url_for('search') }}">Search Movies</a></li>
+            <li><a href="{{ url_for('profile') }}">My Account</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <section class="genre-catalog">
+        <h2>Genres</h2>
+        <div class="genre-grid">
+            <!-- Genre cards -->
+            <div class="genre-card">
+                <a href="/la-casa-de-papel" class="card">
+                    <img src="https://i.pinimg.com/originals/a8/2b/f2/a82bf2ad3c0dae2793c45c15e6d4f04e.gif" alt="Action">
+                    <h3>Action</h3>
+                </a>
+            </div>
+            <div class="genre-card">
+                <a href="/kevin" class="card">
+                    <img src="https://i.gifer.com/origin/58/5878bf609ce1cf463c9f20f4bae96f80_w200.gif" alt="Comedy">
+                    <h3>Comedy</h3>
+                </a>
+            </div>
+            <div class="genre-card">
+                <a href="/russ" class="card">
+                    <img src="https://i.pinimg.com/originals/bc/e0/f3/bce0f32da537f74cac2d779099fb09d3.gif" alt="Drama">
+                    <h3>Drama</h3>
+                </a>
+            </div>
+        </div>
+
+        <div class="genre-grid">
+            <div class="genre-card">
+                <a href="/Insidious" class="card">
+                    <img src="https://i.pinimg.com/originals/cd/74/c6/cd74c6415b4cf7d3bcf77c709513c991.gif" alt="Horror">
+                    <h3>Horror</h3>
+                </a>
+            </div>
+            <div class="genre-card">
+                <a href="/Interstellar" class="card">
+                    <img src="https://i.pinimg.com/originals/25/a7/df/25a7df6a2b7dbb160545a4533a4fb492.gif" alt="Sci-Fi">
+                    <h3>Sci-Fi</h3>
+                </a>
+            </div>
+            <div class="genre-card">
+                <a href="/wolf" class="card">
+                    <img src="https://i.pinimg.com/originals/5f/c7/25/5fc725939b51d448dd1325763b4ee54d.gif" alt="Romance">
+                    <h3>Romance</h3>
+                </a>
+            </div>
+        </div>
+
+        <div class="genre-grid">
+            <div class="genre-card">
+                <a href="/oppenheimer" class="card">
+                    <img src="https://i.pinimg.com/originals/51/3a/67/513a6785e84d826da94db091b79daee3.gif" alt="Thriller">
+                    <h3>Thriller</h3>
+                </a>
+            </div>
+            <div class="genre-card">
+                <a href="/fast" class="card">
+                    <img src="https://i.pinimg.com/originals/f1/59/67/f159675ba88a810c6d82ddf239da7c5d.gif" alt="Adventure">
+                    <h3>Adventure</h3>
+                </a>
+            </div>
+            <div class="genre-card">
+                <a href="/avatar" class="card">
+                    <img src="https://i.pinimg.com/originals/40/f0/0b/40f00b9ed42dd0682a98843d2762d699.gif" alt="Animation">
+                    <h3>Animation</h3>
+                </a>
+            </div>
+        </div>
+    </section>
+</main>
+
+</body>
+</html>
