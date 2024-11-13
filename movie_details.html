@@ -1,0 +1,9 @@
+<!-- movie_details.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{{ movie[1] }}</h1>  <!-- Название фильма -->
+    <p>{{ movie[2] }}</p>    <!-- Жанр -->
+    <p>Рейтинг: {{ movie[3] }}</p> <!-- Рейтинг -->
+    <p>{{ movie[4] }}</p>    <!-- Описание -->
+{% endblock %}

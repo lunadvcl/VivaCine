@@ -1,0 +1,22 @@
+<!-- templates/personal.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Страница "Для меня"</h1>
+    <!-- Контент страницы "Для меня" -->
+
+    <section class="movie-catalog">
+        <h2>Рекомендованные фильмы для вас</h2>
+        <div class="movie-grid">
+            {% for movie in movies %}
+                <div class="movie-card">
+                    <a href="{{ url_for('movie_details', movie_id=movie[0]) }}">
+                        <img src="{{ movie[5] }}" alt="Изображение фильма">
+                        <h3>{{ movie[1] }}</h3>
+                    </a>
+                    <p>{{ movie[2] }} / {{ movie[3] }}</p>  <!-- Жанр / Рейтинг -->
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}

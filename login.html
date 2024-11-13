@@ -7,19 +7,19 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-image: url('static/background.jpg');
+            background-image: url('/static/background.jpg');
             background-size: cover;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            color: white; /* Цвет текста для лучшей читаемости */
-            backdrop-filter: blur(4px); /* Небольшое размытие фона */
+            color: white;
+            backdrop-filter: blur(4px);
         }
 
         .login-container {
-            background-color: rgba(0, 0, 0, 0.7); /* Полупрозрачный черный фон */
+            background-color: rgba(0, 0, 0, 0.7);
             padding: 20px;
             border-radius: 10px;
             width: 350px;
@@ -30,7 +30,7 @@
         .login-container h1 {
             font-size: 24px;
             margin-bottom: 10px;
-            color: #ffffff; /* Белый цвет заголовка */
+            color: #ffffff;
         }
 
         .input-group {
@@ -40,15 +40,15 @@
         .input-group input {
             width: 100%;
             padding: 10px;
-            border: 1px solid #444; /* Более темная граница для видимости */
+            border: 1px solid #444;
             border-radius: 5px;
             font-size: 16px;
-            background-color: rgba(255, 255, 255, 0.2); /* Полупрозрачный фон полей */
+            background-color: rgba(255, 255, 255, 0.2);
             color: #ffffff;
         }
 
         .input-group input::placeholder {
-            color: #cccccc; /* Цвет плейсхолдера для улучшенной видимости */
+            color: #cccccc;
         }
 
         .login-btn {
@@ -56,7 +56,7 @@
             padding: 10px;
             border: none;
             border-radius: 5px;
-            background-color: #ff6f61; /* Яркий цвет кнопки для акцента */
+            background-color: #ff6f61;
             color: white;
             font-size: 16px;
             cursor: pointer;
@@ -64,7 +64,7 @@
         }
 
         .login-btn:hover {
-            background-color: #ff5a4c; /* Более тёмный оттенок при наведении */
+            background-color: #ff5a4c;
         }
 
         .social-login {
@@ -83,8 +83,7 @@
         }
 
         .secondary-links a {
-            display: block;
-            color: #ff6f61; /* Цвет ссылок для видимости */
+            color: #ff6f61;
             text-decoration: none;
             font-size: 14px;
             margin-top: 5px;
@@ -101,14 +100,15 @@
     <h1>VivaCine</h1>
     <p>Войдите или зарегистрируйтесь</p>
 
-    <div class="input-group">
-        <input type="text" placeholder="Логин или email">
-    </div>
-    <div class="input-group">
-        <input type="password" placeholder="Пароль">
-    </div>
-
-    <button class="login-btn">Войти</button>
+    <form method="POST" action="{{ url_for('login') }}">
+        <div class="input-group">
+            <input type="email" name="email" placeholder="Email" required>
+        </div>
+        <div class="input-group">
+            <input type="password" name="password" placeholder="Пароль" required>
+        </div>
+        <button type="submit" class="login-btn">Войти</button>
+    </form>
 
     <div class="secondary-links">
         <a href="/register">Нету аккаунта? Регистрация</a>
@@ -116,10 +116,10 @@
 
     <p>Войти с помощью</p>
     <div class="social-login">
-        <img src="vk_icon.png" alt="Вконтакте">
-        <img src="google_icon.png" alt="Google">
-        <img src="qr_icon.png" alt="QR-код">
-        <img src="facebook_icon.png" alt="Facebook">
+        <img src="/static/vk_icon.png" alt="Вконтакте">
+        <img src="/static/google_icon.png" alt="Google">
+        <img src="/static/qr_icon.png" alt="QR-код">
+        <img src="/static/facebook_icon.png" alt="Facebook">
     </div>
 </div>
 

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Titanic</title>
+    <style>
+        /* Общие стили страницы */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: black; /* Черный фон */
+            color: white; /* Белый текст */
+            font-family: Arial, sans-serif;
+            text-align: center;
+            position: relative;
+        }
+
+        /* Стили для верхнего меню */
+        .top-bar {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .top-bar a, .top-bar button {
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-back-home {
+            background-color: #910000;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        .btn-back-home:hover {
+            background-color: #371d00;
+        }
+
+        /* Кнопки без фона */
+        .control-btn {
+            background: none;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            padding: 0;
+        }
+
+        /* Контейнер для GIF'ов */
+        #gif-container {
+            display: flex;
+            overflow: hidden;
+            width: 100%;
+            height: 70vh;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .gif {
+            width: 100%;
+            height: auto;
+            display: none;  /* Все GIF'ы скрыты изначально */
+        }
+
+        .gif.active {
+            display: block;  /* Показываем активный GIF */
+        }
+
+        /* Стили для контента */
+        .content {
+            padding: 20px;
+            font-size: 18px;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 20px auto;
+            text-align: left; /* Выравнивание текста слева */
+        }
+
+        h1, h2 {
+            font-size: 2em;
+            margin: 10px 0;
+        }
+
+        footer {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #000000;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Верхняя панель с кнопками -->
+    <div class="top-bar">
+        <a href="{{ url_for('index') }}" class="btn-back-home">Home</a>
+        <a href="{{ url_for('genres') }}" class="btn-back-home">Genres</a>
+        <button class="control-btn" onclick="togglePlay()">Soundtrack ♬</button>
+    </div>
+
+    <!-- Контейнер для GIF'ов -->
+    <div id="gif-container">
+        <img class="gif" src="https://i.pinimg.com/originals/50/8b/78/508b7897be9798ad85cae743dfef7f00.gif" alt="La Casa de Papel" />
+        <img class="gif" src="https://i.pinimg.com/originals/c2/99/cf/c299cf9092e1448ad621bed180bc9eee.gif" alt="La Casa de Papel 2" />
+        <img class="gif" src="https://i.pinimg.com/originals/ba/cb/bd/bacbbd5e3f74fcc086105ed276703b5c.gif" alt="La Casa de Papel 3" />
+        <img class="gif" src="https://i.pinimg.com/originals/b5/4b/a7/b54ba73e2aa56f4a94cb1c641c2a27ac.gif" alt="La Casa de Papel 4" />
+        <img class="gif" src="https://i.pinimg.com/originals/ef/47/66/ef4766172a46fa68881acfbaeff1b839.gif" alt="La Casa de Papel 5" />
+    </div>
+
+    <!-- Контент страницы -->
+    <div class="content">
+        <header>
+            <h1>Titanic</h1>
+        </header>
+
+        <section>
+            <h2>Описание фильма</h2>
+            <p>La Casa de Papel — испанский криминальный телесериал, рассказывающий историю группы преступников, которые планируют крупнейшее ограбление в истории Испании. Сериал привлек внимание зрителей своим напряжённым сюжетом, яркими персонажами и непредсказуемыми поворотами.</p>
+        </section>
+
+        <section class="details">
+            <h2>Подробности</h2>
+            <ul>
+                <li><strong>Жанр:</strong> Криминал, Драма</li>
+                <li><strong>Рейтинг:</strong> 8.3/10 (IMDb)</li>
+                <li><strong>Год выпуска:</strong> 2017</li>
+                <li><strong>Сезоны:</strong> 5</li>
+            </ul>
+        </section>
+    </div>
+
+    <!-- Футер -->
+    <footer>
+        <p>&copy; 2024 Ваш сайт. Все права защищены.</p>
+    </footer>
+
+    <!-- Встроенный YouTube аудио -->
+<iframe id="audio" width="0" height="0" src="https://www.youtube.com/embed/F2RnxZnubCM?autoplay=1" allow="autoplay"></iframe>
+
+
+    <script>
+        // Функция для управления воспроизведением и паузой
+        function togglePlay() {
+            const audio = document.getElementById('audio');
+            if (audio.src.includes('autoplay=1')) {
+                audio.src = audio.src.replace('autoplay=1', 'autoplay=0');
+            } else {
+                audio.src = audio.src.replace('autoplay=0', 'autoplay=1');
+            }
+        }
+
+        // Функция для включения и выключения звука
+        function toggleMute() {
+            const audio = document.getElementById('audio');
+            audio.muted = !audio.muted;
+        }
+
+        // Автозапуск GIF
+        const gifs = document.querySelectorAll('.gif');
+        let currentGifIndex = 0;
+        function showNextGif() {
+            gifs[currentGifIndex].classList.remove('active');
+            currentGifIndex = (currentGifIndex + 1) % gifs.length;
+            gifs[currentGifIndex].classList.add('active');
+        }
+        gifs[currentGifIndex].classList.add('active');
+        setInterval(showNextGif, 3000);
+    </script>
+</body>
+</html>

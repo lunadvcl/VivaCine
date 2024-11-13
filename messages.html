@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Сообщения</title>
+</head>
+<body>
+    <h1>Все сообщения</h1>
+    <ul>
+        {% for message in messages %}
+            <li><strong>Имя:</strong> {{ message[1] }} <br>
+                <strong>Email:</strong> {{ message[2] }} <br>
+                <strong>Сообщение:</strong> {{ message[3] }}
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мой аккаунт</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <a href="/" class="btn-home">Home</a>
+    <div class="profile-container">
+        <h2>Основная информация</h2>
+        <div class="profile-info">
+            <div class="profile-picture" style="background-image: url('{{ url_for('static', filename='background_image.jpg') }}');">
+                <img src="{{ url_for('static', filename='profile_picture.png') }}" alt="Profile Picture">
+            </div>
+            <p><strong>Имя:</strong> {{ user.first_name }}</p>
+            <p><strong>Фамилия:</strong> {{ user.last_name }}</p>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+        </div>
+        <a href="{{ url_for('logout') }}" class="logout-button">Выйти из аккаунта</a>
+    </div>
+</body>
+</html>
