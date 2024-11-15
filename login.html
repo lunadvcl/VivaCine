@@ -1,36 +1,47 @@
-<!DOCTYPE html>
-<html lang="ru">
+ <!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Вход - VivaCine</title>
+    <title>Login - VivaCine</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-image: url('/static/background.jpg');
-            background-size: cover;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
-            color: white;
-            backdrop-filter: blur(4px);
+            background: url('/static/fon1.jpg') no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* Полупрозрачный черный слой */
+            z-index: -1;
         }
 
         .login-container {
             background-color: rgba(0, 0, 0, 0.7);
-            padding: 20px;
-            border-radius: 10px;
-            width: 350px;
+            padding: 50px;
+            border-radius: 20px;
+            width: 500px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
             text-align: center;
         }
 
         .login-container h1 {
-            font-size: 24px;
-            margin-bottom: 10px;
-            color: #ffffff;
+            font-size: 60px;
+            margin-bottom: 0px;
+            color: #e87c00;
         }
 
         .input-group {
@@ -41,41 +52,30 @@
             width: 100%;
             padding: 10px;
             border: 1px solid #444;
-            border-radius: 5px;
-            font-size: 16px;
+            border-radius: 10px;
+            font-size: 20px;
             background-color: rgba(255, 255, 255, 0.2);
-            color: #ffffff;
+            color: #ec9855;
         }
 
         .input-group input::placeholder {
-            color: #cccccc;
+            color: #ffffff;
         }
 
         .login-btn {
             width: 100%;
             padding: 10px;
             border: none;
-            border-radius: 5px;
-            background-color: #ff6f61;
-            color: white;
-            font-size: 16px;
+            border-radius: 40px;
+            background-color: #e85e00;
+            color: #ffffff;
+            font-size: 30px;
             cursor: pointer;
             transition: background-color 0.3s;
         }
 
         .login-btn:hover {
-            background-color: #ff5a4c;
-        }
-
-        .social-login {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 15px;
-        }
-
-        .social-login img {
-            width: 30px;
-            cursor: pointer;
+            background-color: #ffa602;
         }
 
         .secondary-links {
@@ -83,7 +83,7 @@
         }
 
         .secondary-links a {
-            color: #ff6f61;
+            color: #ffffff;
             text-decoration: none;
             font-size: 14px;
             margin-top: 5px;
@@ -98,30 +98,23 @@
 
 <div class="login-container">
     <h1>VivaCine</h1>
-    <p>Войдите или зарегистрируйтесь</p>
+    <p>Login or register</p>
 
     <form method="POST" action="{{ url_for('login') }}">
         <div class="input-group">
             <input type="email" name="email" placeholder="Email" required>
         </div>
         <div class="input-group">
-            <input type="password" name="password" placeholder="Пароль" required>
+            <input type="password" name="password" placeholder="Password" required>
         </div>
-        <button type="submit" class="login-btn">Войти</button>
+        <button type="submit" class="login-btn">Login</button>
     </form>
 
     <div class="secondary-links">
-        <a href="/register">Нету аккаунта? Регистрация</a>
-    </div>
-
-    <p>Войти с помощью</p>
-    <div class="social-login">
-        <img src="/static/vk_icon.png" alt="Вконтакте">
-        <img src="/static/google_icon.png" alt="Google">
-        <img src="/static/qr_icon.png" alt="QR-код">
-        <img src="/static/facebook_icon.png" alt="Facebook">
+        <a href="/register">Don't have an account? Registration</a>
     </div>
 </div>
 
 </body>
 </html>
+
