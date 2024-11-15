@@ -17,7 +17,13 @@ def get_db():
             print("Ошибка подключения к базе данных:", e)
             return None
     return g._database
-
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'user_id' not in session:  # Проверка наличия пользователя в сессии
+            return redirect(url_for('login'))  # Перенаправляем на страницу входа
+        return f(*args, **kwargs)
+    return decorated_function
 # Закрытие подключения при завершении запроса
 @app.teardown_appcontext
 def close_connection(exception):
@@ -116,48 +122,63 @@ def movie_details(movie_id):
     return render_template('movie_details.html', movie=movie)
 
 @app.route('/la-casa-de-papel')
+@login_required
 def la_casa_de_papel():
     return render_template('La Casa de Papel.html')
 @app.route('/pirates')
+@login_required
 def pirates():
     return render_template('pirates.html')
 @app.route('/leon')
+@login_required
 def leon():
     return render_template('leon.html')
 @app.route('/russ')
+@login_required
 def russ():
     return render_template('russ.html')
 @app.route('/fast')
+@login_required
 def fast():
     return render_template('fast.html')
 @app.route('/ocean')
+@login_required
 def ocean():
     return render_template('ocean.html')
 @app.route('/kevin')
+@login_required
 def kevin ():
     return render_template('kevin.html')
 @app.route('/oppenheimer')
+@login_required
 def oppenheimer():
     return render_template('oppenheimer.html')
 @app.route('/wolf')
+@login_required
 def wolf():
     return render_template('wolf.html')
 @app.route('/Insidious')
+@login_required
 def insidious():
     return render_template('Insidious.html')
 @app.route('/avatar')
+@login_required
 def avatar():
     return render_template('avatar.html')
 @app.route('/Interstellar')
+@login_required
 def Interstellar():
     return render_template('Interstellar.html')
 @app.route('/russ2')
+@login_required
 def kitchen():
     return render_template('russ2.html')
 @app.route('/Twilight')
+@login_required
 def Twilight():
     return render_template('Twilight.html')
 @app.route('/Winx')
+@login_required
 def Winx():
     return render_template('Winx.html')
 
@@ -312,4 +333,3 @@ def show_users():
 if __name__ == '__main__':
     init_db()
     app.run(host='localhost', port=5009, debug=True)
-
