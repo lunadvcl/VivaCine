@@ -156,16 +156,25 @@
 
 <header>
     <nav>
-        <ul>
-            <li><a href="{{ url_for('index') }}">Home</a></li>
-            <li><a href="{{ url_for('genres') }}">Genres</a></li>
-            <li><a href="{{ url_for('categories') }}">Categories</a></li>
-            <li><a href="{{ url_for('library') }}">Library</a></li>
-            <li><a href="{{ url_for('personal') }}">For Me</a></li>
-            <li><a href="{{ url_for('search') }}">Search Movies</a></li>
-            <li><a href="{{ url_for('profile') }}">My Account</a></li>
-        </ul>
-    </nav>
+    <ul>
+        <li><a href="{{ url_for('index') }}">Home</a></li>
+        <li><a href="{{ url_for('genres') }}">Genres</a></li>
+        <li><a href="{{ url_for('categories') }}">Categories</a></li>
+        <li><a href="{{ url_for('library') }}">Library</a></li>
+        <li><a href="{{ url_for('index') }}">For Me</a></li>
+        <li><a href="{{ url_for('search') }}">Search Movies</a></li>
+
+        {% if session.get('user_id') %}
+            <!-- If the user is logged in, show their name -->
+            <li><a href="{{ url_for('profile') }}">{{ session.get('username') }}</a></li>
+        {% else %}
+            <!-- If the user is not logged in, show 'Войти' -->
+            <li><a href="{{ url_for('login') }}">Login</a></li>
+        {% endif %}
+    </ul>
+
+</nav>
+
 </header>
 
 <div class="home-background">
