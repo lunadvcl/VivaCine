@@ -182,21 +182,21 @@
     </div>
 
     <div id="movieGrid">
-        <div class="movie-card" onclick="openMoviePage('Avatar')">
+        <div class="movie-card" onclick="openMoviePage('avatar')">
             <img src="https://comichub.blob.core.windows.net/high/67409f5b-1617-4eb1-91bd-88865c44f32a.jpg" alt="Avatar">
             <h3>Avatar</h3>
             <p> 2005</p>
             <p>-Animated Series</p>
             <p>-Seasons: 3</p>
         </div>
-<div class="movie-card" onclick="openMoviePage('Boys over flowers')">
+<div class="movie-card" onclick="openMoviePage('russ2')">
             <img src="https://i.pinimg.com/736x/56/12/3f/56123fffe3b640426acde1779cfd886b.jpg" alt="Avatar">
             <h3>Boys over flowers</h3>
             <p> 2009</p>
             <p>-Korean Drama</p>
             <p>-Season: 1</p>
         </div>
-        <div class="movie-card" onclick="openMoviePage('Fast and Furious')">
+        <div class="movie-card" onclick="openMoviePage('fast')">
             <img src="https://i.pinimg.com/474x/00/b4/69/00b469fc87bb4e85202f0631a14c9065.jpg" alt="Fast and Furious">
             <h3>Fast and Furious</h3>
             <p>2001</p>
@@ -204,7 +204,7 @@
             <p>-Seasons: 10</p>
         </div>
 
-        <div class="movie-card" onclick="openMoviePage('Home Alone')">
+        <div class="movie-card" onclick="openMoviePage('kevin')">
             <img src="https://i.pinimg.com/474x/06/a4/e6/06a4e63df2b785eb282bdd9c96835ead.jpg" alt="Home Alone">
             <h3>Home Alone</h3>
             <p>1990</p>
@@ -227,7 +227,7 @@
             <p>-Science Fiction, Drama</p>
         </div>
 
-        <div class="movie-card" onclick="openMoviePage('La Casa de Papel')">
+        <div class="movie-card" onclick="openMoviePage('la-casa-de-papel')">
             <img src="https://i.pinimg.com/474x/ca/f9/6a/caf96a1cfcd1310de52060a5b0ea0fcd.jpg" alt="La Casa de Papel">
             <h3>La Casa de Papel</h3>
             <p> 2017</p>
@@ -235,28 +235,28 @@
             <p>-Seasons: 5</p>
         </div>
 
-        <div class="movie-card" onclick="openMoviePage('Leon')">
+        <div class="movie-card" onclick="openMoviePage('leon')">
             <img src="https://i.pinimg.com/474x/cb/14/7c/cb147c47d60961d9293a2b0db943f306.jpg" alt="Leon">
             <h3>Leon</h3>
             <p>1994</p>
             <p>-Thriller, Drama</p>
         </div>
 
-        <div class="movie-card" onclick="openMoviePage('Oceans 8')">
+        <div class="movie-card" onclick="openMoviePage('ocean')">
             <img src="https://i.pinimg.com/736x/b0/dc/29/b0dc29c8f3a43732a9956a23062ba76e.jpg" alt="Oceans 8">
             <h3>Oceans 8</h3>
             <p>2018</p>
             <p>-Crime, Comedy</p>
         </div>
 
-        <div class="movie-card" onclick="openMoviePage('Oppenheimer')">
+        <div class="movie-card" onclick="openMoviePage('oppenheimer')">
             <img src="https://i.pinimg.com/564x/4a/31/6e/4a316eb060bbaabc3cb270b19b3407a2.jpg" alt="Oppenheimer">
             <h3>Oppenheimer</h3>
             <p>2023</p>
             <p>-Drama, History</p>
         </div>
 
-        <div class="movie-card" onclick="openMoviePage('Pirates of the Caribbean')">
+        <div class="movie-card" onclick="openMoviePage('pirates')">
             <img src="https://i.pinimg.com/474x/f3/8b/15/f38b15a1f327e4c6c48f131d1a9cd74d.jpg" alt="Pirates of the Caribbean">
             <h3>Pirates of the Caribbean</h3>
             <p> 2003</p>
@@ -264,7 +264,7 @@
             <p>-Seasons: 5</p>
         </div>
 
-        <div class="movie-card" onclick="openMoviePage('Слово пацана')">
+        <div class="movie-card" onclick="openMoviePage('russ')">
             <img src="https://i.pinimg.com/474x/9b/81/e3/9b81e3f234cf402ab2ea7ee8d8489c3e.jpg" alt="Слово пацана">
             <h3>Слово пацана</h3>
             <p> 2023</p>
@@ -272,7 +272,7 @@
             <p>-Seasons: 1</p>
         </div>
 
-        <div class="movie-card" onclick="openMoviePage('Titanic')">
+        <div class="movie-card" onclick="openMoviePage('wolf')">
             <img src="https://i.pinimg.com/736x/2e/13/9c/2e139cb42ed154fc66c52baac174b7b9.jpg" alt="Titanic">
             <h3>Titanic</h3>
             <p> 1997</p>
@@ -314,6 +314,9 @@
                 }
             });
         }
+ function openMoviePage(movieSlug) {
+        window.location.href = `/${movieSlug}`;
+    }
     </script>
 </body>
 </html>
