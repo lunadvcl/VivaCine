@@ -24,10 +24,18 @@
         }
 
         nav {
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #000; /* Задайте нужный цвет фона */
+            z-index: 1000; /* Чтобы панель оставалась над остальными элементами */
+            padding: 10px 0;
         }
+
+        body {
+            padding-top: 60px; /* Отступ сверху, чтобы контент не скрывался под навигационной панелью */
+        }
+
 
         ul {
             display: flex;
@@ -67,10 +75,12 @@
                 <li><a href="{{ url_for('library') }}">Библиотека</a></li>
                 <li><a href="{{ url_for('personal') }}">Для меня</a></li>
                 <li><a href="{{ url_for('search') }}">Поиск фильмов</a></li>
-                <li><a href="{{ url_for('profile') }}">Мой аккаунт</a></li>
-                {% if 'user_id' in session %}
-                    <li><a href="{{ url_for('logout') }}">Выйти</a></li>
+
+                {% if session.get('user_id') %}
+                    <!-- If the user is logged in, show their name -->
+                    <li><a href="{{ url_for('profile') }}">{{ session.get('username') }}</a></li>
                 {% else %}
+                    <!-- If the user is not logged in, show 'Войти' -->
                     <li><a href="{{ url_for('login') }}">Войти</a></li>
                 {% endif %}
             </ul>
