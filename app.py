@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, g, session
+from flask import Flask, render_template, request, redirect, url_for, g, session, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
 import os
@@ -234,39 +234,56 @@ def register():
     return render_template('register.html')
 
 
+# Login route
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         email = request.form.get('email')
         password = request.form.get('password')
 
-        # Проверка обязательных полей
+        # Check if both fields are provided
         if not email or not password:
-            return "Email и пароль обязательны", 400
+            flash("Email и пароль обязательны.")
+            return render_template('login.html'), 400
 
-        # Подключение к базе данных
+        # Connect to the database
         db = get_db()
         if db is None:
-            return "Ошибка подключения к базе данных", 500
+            flash("Ошибка подключения к базе данных.")
+            return render_template('login.html'), 500
         cursor = db.cursor()
 
         try:
-            # Получение пользователя по email
+            # Retrieve user by email
             cursor.execute('SELECT * FROM User WHERE email = ?', (email,))
             user = cursor.fetchone()
 
         except sqlite3.Error as e:
             print("Ошибка при выполнении запроса на вход:", e)
-            return "Ошибка выполнения запроса", 500
+            flash("Ошибка выполнения запроса.")
+            return render_template('login.html'), 500
 
-        # Проверка пароля
+        # Verify the password
         if user and check_password_hash(user[3], password):
-            session['user_id'] = user[0]  # Сохраняем user_id в сессии
+            # Store user_id and username in the session
+            session['user_id'] = user[0]
+            session['username'] = user[1]  # Assuming the username is in the second column
+            flash("Вы успешно вошли в систему.")
             return redirect(url_for('index'))
 
-        return "Неверные учетные данные", 400
+        # If credentials are incorrect
+        flash("Неверные учетные данные.")
+        return render_template('login.html'), 400
 
+    # GET request: render the login page
     return render_template('login.html')
+
+# Logout route
+@app.route('/logout')
+def logout():
+    session.clear()  # Clear all session data
+    flash("Вы вышли из системы.")
+    return redirect(url_for('login'))
 
 
 @app.route('/profile')
@@ -290,28 +307,6 @@ def profile():
         return "Пользователь не найден", 404
 
 
-@app.route('/logout')
-def logout():
-    session.clear()  # Очищаем данные сессии
-    return redirect(url_for('login'))
-
-
-# Страница для отображения сообщения (сохранения)
-@app.route('/submit_message', methods=['POST'])
-def submit_message():
-    name = request.form.get('name')
-    email = request.form.get('email')
-    message = request.form.get('message')
-
-    if not name or not email or not message:
-        return "Все поля обязательны", 400
-
-    db = get_db()
-    cursor = db.cursor()
-    cursor.execute("INSERT INTO messages (name, email, message) VALUES (?, ?, ?)", (name, email, message))
-    db.commit()
-
-    return redirect(url_for('index'))
 
 @app.route('/show_user_columns')
 def show_user_columns():
