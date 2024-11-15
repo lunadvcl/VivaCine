@@ -7,7 +7,76 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <a href="/" class="btn-home">Home</a>
+<style>
+        /* Общие стили */
+        html, body {
+            font-family: 'Lastra', serif;
+            margin: 0;
+            padding: 0;
+            background-color: black;
+            color: #020202;
+        }
+
+        header {
+            background-color: #000;
+            padding: 45px 0;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #020202;
+            z-index: 1000;
+            padding: 10px 0;
+        }
+
+        body {
+            padding-top: 60px;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style-type: none;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+        }
+
+        nav ul li {
+            margin: 0 20px;
+        }
+
+        nav ul li a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: bold;
+            padding: 15px 25px;
+            transition: all 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            background: linear-gradient(45deg, #d89b1d, #ff8c00);
+            color: #020202;
+            transform: scale(1.2);
+        }
+         </style>
+</head>
+<body>
+<!-- Навигационная панель -->
+    <nav>
+       <ul>
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('genres') }}">Genres</a></li>
+            <li><a href="{{ url_for('categories') }}">Categories</a></li>
+            <li><a href="{{ url_for('library') }}">Library</a></li>
+            <li><a href="{{ url_for('personal') }}">For Me</a></li>
+            <li><a href="{{ url_for('search') }}">Search Movies</a></li>
+            <li><a href="{{ url_for('profile') }}">My Account</a></li>
+        </ul>
+    </nav>
+  <main>
     <div class="profile-container">
         <h2>Основная информация</h2>
         <div class="profile-info">
@@ -20,5 +89,6 @@
         </div>
         <a href="{{ url_for('logout') }}" class="logout-button">Выйти из аккаунта</a>
     </div>
+      </main>
 </body>
 </html>
