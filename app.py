@@ -114,7 +114,7 @@ def movie_details(movie_id):
     if movie is None:
         return "Movie not found", 404
     return render_template('movie_details.html', movie=movie)
-    
+
 @app.route('/la-casa-de-papel')
 def la_casa_de_papel():
     return render_template('La Casa de Papel.html')
@@ -145,6 +145,22 @@ def wolf():
 @app.route('/Insidious')
 def insidious():
     return render_template('Insidious.html')
+@app.route('/avatar')
+def avatar():
+    return render_template('avatar.html')
+@app.route('/Interstellar')
+def Interstellar():
+    return render_template('Interstellar.html')
+@app.route('/russ2')
+def kitchen():
+    return render_template('russ2.html')
+@app.route('/Twilight')
+def Twilight():
+    return render_template('Twilight.html')
+@app.route('/Winx')
+def Winx():
+    return render_template('Winx.html')
+
 
 # Страница для отображения сообщений
 @app.route('/messages')
@@ -241,6 +257,7 @@ def profile():
     cursor = db.cursor()
     cursor.execute("SELECT first_name, last_name, email FROM User WHERE id = ?", (session['user_id'],))
     user = cursor.fetchone()
+
     if user:
         user_info = {
             'first_name': user[0],
@@ -292,6 +309,7 @@ def show_users():
     return str(users)
 
 
-if name == '__main__':
+if __name__ == '__main__':
     init_db()
     app.run(host='localhost', port=5009, debug=True)
+
