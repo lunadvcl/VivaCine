@@ -25,23 +25,23 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5); /* Полупрозрачный черный слой */
+            background: rgba(0, 0, 0, 0.5); /* Semi-transparent black layer */
             z-index: -1;
         }
 
         .login-container {
-            background-color: rgba(0, 0, 0, 0.7);
+            background-color: rgba(2, 2, 2, 0.69);
             padding: 50px;
             border-radius: 20px;
             width: 500px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 4px 8px rgb(2, 2, 2);
             text-align: center;
         }
 
         .login-container h1 {
             font-size: 60px;
             margin-bottom: 0px;
-            color: #e87c00;
+            color: #e85e00;
         }
 
         .input-group {
@@ -98,7 +98,7 @@
 
 <div class="login-container">
     <h1>VivaCine</h1>
-    <p>Войдите или зарегистрируйтесь</p>
+    <p>Login or Register</p>
 
     <!-- Flash messages for login errors -->
     {% with messages = get_flashed_messages() %}
@@ -117,22 +117,15 @@
             <input type="email" name="email" placeholder="Email" required>
         </div>
         <div class="input-group">
-            <input type="password" name="password" placeholder="Пароль" required>
+            <input type="password" name="password" placeholder="Password" required>
         </div>
-        <button type="submit" class="login-btn">Войти</button>
+        <button type="submit" class="login-btn">Login</button>
     </form>
 
     <div class="secondary-links">
-        <a href="{{ url_for('register') }}">Нету аккаунта? Регистрация</a>
+        <a href="{{ url_for('register') }}">Don't have an account? Register</a>
     </div>
 
-    <p>Войти с помощью</p>
-    <div class="social-login">
-        <img src="/static/vk_icon.png" alt="Вконтакте">
-        <img src="/static/google_icon.png" alt="Google">
-        <img src="/static/qr_icon.png" alt="QR-код">
-        <img src="/static/facebook_icon.png" alt="Facebook">
-    </div>
 </div>
 
 </body>
