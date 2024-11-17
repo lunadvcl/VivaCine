@@ -97,6 +97,17 @@ def categories():
 @app.route('/genres')
 def genres():
     return render_template('genres.html')
+@app.route('/action')
+def action():
+    return render_template('action.html')
+@app.route('/comedy')
+def comedy():
+    return render_template('comedy.html')
+@app.route('/drama')
+def drama():
+    return render_template('drama.html')
+
+
 
 # Страница библиотеки
 @app.route('/library')
@@ -407,10 +418,8 @@ def save_message(sender, message, timestamp):
         json.dump(message_data, file, ensure_ascii=False)
         file.write("\n")  # Добавляем новую строку после каждого сообщения
 
-if __name__ == '__main__':
-    init_db()
-    app.run(host='localhost', port=5009, debug=True)
 
 if __name__ == '__main__':
     init_db()
-    app.run(host='localhost', port=5009, debug=True)
+    app.run(host='localhost', port=5009, debug=True
+
