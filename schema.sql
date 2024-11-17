@@ -1,0 +1,25 @@
+-- schema.sql
+
+CREATE TABLE IF NOT EXISTS user (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT NOT NULL,
+    password TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS movie (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL,
+    genre TEXT NOT NULL,
+    rating REAL NOT NULL,
+    description TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS review (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    content TEXT NOT NULL,
+    rating INTEGER NOT NULL,
+    user_id INTEGER NOT NULL,
+    movie_id INTEGER NOT NULL,
+    FOREIGN KEY(user_id) REFERENCES user(id),
+    FOREIGN KEY(movie_id) REFERENCES movie(id)
+);
