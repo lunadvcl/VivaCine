@@ -1,0 +1,153 @@
+/* Общие стили для страницы */
+body {
+    background-image: url('https://i.pinimg.com/736x/7f/04/fb/7f04fb05d75192dc9c9f322af92e7481.jpg');
+    background-color: #f7e2c5;  /* Теплый желто-песочный цвет для случаев, когда GIF не загрузится */
+    background-size: cover;         /* Масштабирует GIF, чтобы покрыть весь экран */
+    background-position: center;    /* Центрирует изображение */
+    background-repeat: no-repeat;   /* Отключает повторение */
+    background-attachment: fixed;   /* Закрепляет фон при прокрутке */
+    font-family: Times, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+
+/* Стили для GIF на фоне */
+#gif-container {
+    position: relative;
+    width: 100%;
+    height: 40vh;  /* Устанавливаем высоту GIF, оставляя место для контента */
+    z-index: -1;  /* Чтобы GIF был позади контента */
+}
+
+#gif-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;  /* Заполнение экрана без искажения */
+}
+
+/* Стили для основного контента */
+.content {
+    padding: 20px;
+    z-index: 1;
+    margin-top: 20px;  /* Добавляем отступ сверху, чтобы текст не накладывался на GIF */
+}
+
+/* Стили для заголовков */
+h1, h2 {
+    color: white;
+}
+
+/* Стили для текста */
+p, ul {
+    color: white;
+}
+
+/* Стили для кнопки "На главную" */
+.btn-back-home {
+    display: inline-block;
+    background-color: #f5ce0f;
+    color: black;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    margin: 20px;
+}
+
+.btn-back-home:hover {
+    background-color: #e85e00;
+}
+
+/* Основной контейнер профиля */
+.profile-container {
+    width: 90%;  /* Уменьшаем ширину для лучшего отображения на маленьких экранах */
+    max-width: 700px;  /* Максимальная ширина */
+    background-color: rgba(0, 0, 0, 0.6); /* Прозрачный черный фон */
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    backdrop-filter: blur(5px);  /* Немного размытия заднего фона */
+}
+
+/* Заголовок */
+.profile-container h2 {
+    font-size: 30px;
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+/* Блок информации о пользователе */
+.profile-info {
+    margin-bottom: 30px;
+}
+
+/* Картинка профиля с фоновым изображением */
+.profile-picture {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;  /* Круглая картинка */
+    margin: 0 auto 20px;  /* Выравниваем по центру */
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;  /* Обрезать изображение, если оно выходит за круг */
+}
+
+.profile-picture img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;  /* Изображение будет обрезано для сохранения формы круга */
+}
+
+/* Текстовые элементы */
+.profile-info p {
+    font-size: 20px;
+    color: #fff;
+    margin: 10px 0;
+}
+
+/* Стиль кнопки выхода */
+.logout-button {
+    display: inline-block;
+    padding: 12px 25px;
+    font-size: 18px;
+    background-color: #ff4d4d; /* Красный цвет */
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+    background-color: #e60000; /* Темный красный при наведении */
+}
+
+/* Кнопка "Home" в левом верхнем углу */
+.btn-home {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: #f5ce0f;  /* Желтый фон */
+    color: black;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-home:hover {
+    background-color: #e85e00;  /* Темно-оранжевый при наведении */
+}

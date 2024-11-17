@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>My Browsing History</h2>
+<div class="row">
+    {% for movie in movies %}
+        <div class="col-md-4">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ movie.movie_title }}</h5>
+                    <p class="card-text">Watched at: {{ movie.watched_at }}</p>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <p>You haven't watched a single movie yet.</p>
+    {% endfor %}
+</div>
+{% endblock %}

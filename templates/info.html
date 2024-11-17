@@ -1,0 +1,59 @@
+<!-- info.html -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Информация о Фильме</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Стили для интро с трейлером, раздела информации и панели управления */
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Название Фильма</h1>
+    </header>
+
+    <!-- Интро с трейлером -->
+    <div class="film-intro">
+        <video src="trailer.mp4" autoplay loop muted></video>
+        <audio src="soundtrack.mp3" autoplay loop></audio>
+    </div>
+
+    <!-- Раздел информации о фильме -->
+    <div class="info-section">
+        <h2>Информация о фильме</h2>
+        <p>Жанр: Боевик</p>
+        <p>Продолжительность: 2 часа</p>
+        <p>Дубляж: Русский</p>
+    </div>
+
+    <!-- Раздел с актёрами -->
+    <h3>Актёры</h3>
+    <div class="actors-section">
+        <div class="actor-card">
+            <img src="actor1.jpg" alt="Актёр 1">
+            <p>Актёр 1</p>
+        </div>
+        <div class="actor-card">
+            <img src="actor2.jpg" alt="Актёр 2">
+            <p>Актёр 2</p>
+        </div>
+    </div>
+
+    <!-- Панель управления при просмотре фильма -->
+    <div class="control-bar">
+        <button onclick="video.play()">▶️</button>
+        <button onclick="video.pause()">⏸️</button>
+        <input type="range" min="0" max="100" value="50" onchange="setVolume(this.value)">
+    </div>
+
+    <script>
+        const video = document.querySelector('video');
+        function setVolume(value) {
+            video.volume = value / 100;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit profile</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #333; /* Темный фон для страницы */
+            color: #ff8c00; /* Оранжевый цвет текста */
+            margin: 0;
+            padding: 0;
+        }
+
+        .top-bar {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .top-bar a, .top-bar button {
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-back-profile {
+            background-color: #e85e00;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        .btn-back-profile:hover {
+            background-color: #ffa602;
+        }
+
+        /* Кнопки без фона */
+        .control-btn {
+            background: none;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #e87c00; /* Оранжевый цвет для заголовка */
+            margin-top: 50px;
+        }
+
+        form {
+            width: 80%;
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #222; /* Темный фон для формы */
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #e87c00; /* Оранжевый цвет для текста лейблов */
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="date"],
+        input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border: 1px solid #444;
+            font-size: 1rem;
+            color: #ec9855; /* Темный цвет для текста в input */
+            background-color: #333; /* Белый фон для полей ввода */
+        }
+
+        button {
+            background-color: #e85e00; /* Оранжевая кнопка */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #ffa602; /* Более темный оранжевый на hover */
+        }
+
+        input[type="file"] {
+            padding: 5px;
+        }
+
+
+    </style>
+</head>
+
+<body>
+
+
+<!-- Верхняя панель с кнопками -->
+    <div class="top-bar">
+        <a href="{{ url_for('profile') }}" class="btn-back-profile">My profile</a>
+    </div>
+
+
+    <h1>Edit profile</h1>
+    <form method="POST" enctype="multipart/form-data">
+
+        <label>First name:</label>
+        <input type="text" name="first_name" value="{{ user[1] }}" required><br>
+
+        <label>Last name:</label>
+        <input type="text" name="last_name" value="{{ user[2] }}" required><br>
+
+        <label>Username:</label>
+        <input type="text" name="username" value="{{ user[3] }}" required><br>
+
+        <label>Email:</label>
+        <input type="email" name="email" value="{{ user[4] }}" required><br>
+
+        <label>Date of birth:</label>
+        <input type="date" name="birth_date" value="{{ user[5] }}"><br>
+
+        <label>Profile picture:</label>
+        <input type="file" name="profile_picture"><br>
+
+        <button type="submit">Save</button>
+    </form>
+
+    <form method="POST" action="{{ url_for('delete_account') }}" style="margin-top: 20px;">
+        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete your account?')">
+            Delete account
+        </button>
+    </form>
+
+</body>
+</html>

@@ -1,0 +1,11 @@
+.movie-detail {
+    background-color: #1c1c1c;
+    color: #fff;
+    padding: 20px;
+}
+
+.actors img {
+    width: 50px;
+    margin: 10px;
+    border-radius: 50%;
+}

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - VivaCine</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: url('/static/fon1.jpg') no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* Semi-transparent black layer */
+            z-index: -1;
+        }
+
+        .register-container {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 50px;
+            border-radius: 20px;
+            width: 500px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+            text-align: center;
+        }
+
+        .register-container h1 {
+            font-size: 60px;
+            margin-bottom: 0px;
+            color: #e87c00;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #444;
+            border-radius: 10px;
+            font-size: 20px;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #ec9855;
+        }
+
+        .input-group input::placeholder {
+            color: #ffffff;
+        }
+
+        .register-btn {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 40px;
+            background-color: #e85e00;
+            color: #ffffff;
+            font-size: 30px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .register-btn:hover {
+            background-color: #ffa602;
+        }
+
+        .secondary-links {
+            margin-top: 20px;
+        }
+
+        .secondary-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .secondary-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="register-container">
+    <h1>VivaCine</h1>
+    <p>Create an account to access</p>
+
+    <form action="/register" method="POST">
+        <div class="input-group">
+            <input type="text" name="first_name" placeholder="First Name" required>
+        </div>
+        <div class="input-group">
+            <input type="text" name="last_name" placeholder="Last Name" required>
+        </div>
+        <div class="input-group">
+            <input type="text" name="username" placeholder="Username" required>
+        </div>
+        <div class="input-group">
+            <input type="email" name="email" placeholder="Email" required>
+        </div>
+        <div class="input-group">
+            <input type="password" name="password" placeholder="Password" required>
+        </div>
+
+        <button type="submit" class="register-btn">Register</button>
+    </form>
+
+    <div class="secondary-links">
+        <a href="/login">Already have an account? Login</a>
+    </div>
+</div>
+
+</body>
+</html>

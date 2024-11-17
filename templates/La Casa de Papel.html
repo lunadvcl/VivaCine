@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Casa de Papel</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            position: relative;
+        }
+
+        .top-bar {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .top-bar a, .top-bar button {
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-back-home {
+            background-color: #910000;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        .btn-back-home:hover {
+            background-color: #371d00;
+        }
+
+        .control-btn {
+            background: none;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            padding: 0;
+        }
+
+        #gif-container {
+            display: flex;
+            overflow: hidden;
+            width: 100%;
+            height: 70vh;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .gif {
+            width: 100%;
+            height: auto;
+            display: none;
+        }
+
+        .gif.active {
+            display: block;
+        }
+
+        .content {
+            padding: 20px;
+            font-size: 18px;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 20px auto;
+            text-align: left;
+        }
+
+        h1, h2 {
+            font-size: 2em;
+            margin: 10px 0;
+        }
+
+        footer {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #000000;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <a href="{{ url_for('index') }}" class="btn-back-home">Home</a>
+        <a href="{{ url_for('genres') }}" class="btn-back-home">Genres</a>
+        <button class="control-btn" onclick="togglePlay()">Soundtrack ♬</button>
+    </div>
+
+    <div id="gif-container">
+        <img class="gif" src="https://i.pinimg.com/originals/15/da/4a/15da4ab565d706a56080494f3b63b084.gif" alt="La Casa de Papel" />
+        <img class="gif" src="https://i.pinimg.com/originals/66/41/a8/6641a89343c1616e4436545ae1c25ee1.gif" alt="La Casa de Papel 2" />
+        <img class="gif" src="https://i.pinimg.com/originals/a5/e5/65/a5e565d6b0ac55ac377debf24e278fc5.gif" alt="La Casa de Papel 3" />
+        <img class="gif" src="https://i.pinimg.com/originals/7e/7d/ad/7e7dad5a4de3515f9c8f5f429a16d059.gif" alt="La Casa de Papel 4" />
+        <img class="gif" src="https://i.pinimg.com/originals/76/de/a8/76dea8c713dad27abbe3cd4e59f402e2.gif" alt="La Casa de Papel 5" />
+    </div>
+
+    <div class="content">
+        <header>
+            <h1>La Casa de Papel</h1>
+        </header>
+
+        <section>
+            <h2>Description of the film</h2>
+            <p>La Casa de Papel or Money Heist is a Spanish crime drama series developed by Alex Pina, which tells the story of two ingeniously thought-out heists. The first of them takes place within the walls of the Royal Mint of Spain, and the second - in the building of the Bank of Spain itself.</p>
+        </section>
+
+       <section class="details">
+    <h2>Details</h2>
+    <ul>
+        <li><strong>Genre:</strong> Crime, Drama</li>
+        <li><strong>Rating:</strong> 8.3/10 </li>
+        <li><strong>Year of issue:</strong> 2017</li>
+        <li><strong>Seasons:</strong> 5</li>
+    </ul>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/Zx37mfDRpyk?si=yAK9tEdEjala_aMN" frameborder="0" allowfullscreen></iframe>
+</section>
+    </div>
+
+    <footer>
+    <div class="footer-content">
+
+        <div class="social-media">
+            <a href="https://www.facebook.com/?locale=ru_RU" class="social-icon"><i class="fab fa-facebook"></i></a>
+            <a href="https://x.com/?lang=ru" class="social-icon"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.instagram.com/" class="social-icon"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.youtube.com/" class="social-icon"><i class="fab fa-youtube"></i></a>
+        </div>
+    </div>
+    <div class="footer-buttons">
+        <a href="/chat" class="contact-button">Do you have any questions? Write to us</a>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2024 VivaCine. All rights reserved.</p>
+    </div>
+</footer>
+
+<style>
+    footer {
+        background-color: #000;
+        color: #fff;
+        padding: 30px 0;
+        font-family: 'Arial', sans-serif;
+        text-align: center; /* Center the footer content */
+    }
+
+    .footer-content {
+        display: flex;
+        justify-content: center; /* Center the content */
+        align-items: center;
+        margin-bottom: 20px;
+        flex-direction: column; /* Stack elements vertically */
+    }
+
+    .contacts p {
+        margin: 10px 0;
+        font-size: 15px;
+        font-weight: normal; /* Make the text normal weight */
+        pointer-events: none; /* Prevent text from being clickable */
+    }
+
+    .social-media {
+        display: flex;
+        gap: 20px;
+        margin-top: 20px;
+    }
+
+    .social-icon {
+        color: #fff;
+        font-size: 40px;
+        transition: color 0.3s ease;
+    }
+
+    .social-icon:hover {
+        color: #ff8c00; /* Hover color */
+    }
+
+    .footer-buttons {
+        margin-top: 20px;
+    }
+
+    .contact-button {
+        background-color: #020202;
+        color: #ffffff;
+        font-size: 16px;
+        font-weight: bold;
+        padding: 10px 20px;
+        border-radius: 30px;
+        text-decoration: none;
+        display: inline-block;
+        transition: all 0.3s ease;
+    }
+
+    .contact-button:hover {
+        background-color: #020202;
+        transform: scale(1.1);
+    }
+
+    .footer-bottom {
+        font-size: 14px;
+        opacity: 0.7;
+        margin-top: 20px;
+    }
+</style>
+
+
+     <!-- Встроенный YouTube аудио -->
+    <iframe id="audio" width="0" height="0" src="https://www.youtube.com/embed/ehZFyxRbyd0?autoplay=1&enablejsapi=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+    <script>
+        let player;
+
+        // Инициализация YouTube Player API
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('audio', {
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+        // Когда плеер готов
+        function onPlayerReady(event) {
+            console.log('Player Ready');
+        }
+
+        // Когда состояние плеера изменяется
+        function onPlayerStateChange(event) {
+            if (event.data === YT.PlayerState.PLAYING) {
+                console.log("Воспроизведение");
+            }
+            if (event.data === YT.PlayerState.PAUSED) {
+                console.log("Пауза");
+            }
+        }
+
+        // Функция для воспроизведения/паузы
+        function togglePlay() {
+            if (player) {
+                if (player.getPlayerState() === YT.PlayerState.PLAYING) {
+                    player.pauseVideo();
+                } else {
+                    player.playVideo();
+                }
+            }
+        }
+
+        // Загружаем API YouTube
+        var script = document.createElement('script');
+        script.src = "https://www.youtube.com/iframe_api";
+        document.body.appendChild(script);
+
+        // Автозапуск GIF
+        const gifs = document.querySelectorAll('.gif');
+        let currentGifIndex = 0;
+
+        function showNextGif() {
+            gifs[currentGifIndex].classList.remove('active'); // Убираем активный класс с текущего GIF
+            currentGifIndex = (currentGifIndex + 1) % gifs.length; // Переходим к следующему GIF
+            gifs[currentGifIndex].classList.add('active'); // Добавляем активный класс к следующему GIF
+        }
+
+        gifs[currentGifIndex].classList.add('active'); // Делаем первый GIF активным
+        setInterval(showNextGif, 3000); // Переключаем GIF каждые 3 секунды
+    </script>
+</body>
+</html>

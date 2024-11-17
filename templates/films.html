@@ -1,0 +1,61 @@
+<!-- films.html -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог фильмов</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Стили карусели и карточек фильмов */
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Каталог фильмов</h1>
+    </header>
+
+    <!-- Карусель карточек фильмов -->
+    <div class="carousel">
+        <button class="carousel-button left" onclick="scrollCarousel(-1)">&#9664;</button>
+
+        <!-- Каждая карточка фильма будет ссылкой на `info.html` -->
+        <a href="info.html" class="card" style="background-image: url('film1.jpg');"
+           onmouseenter="playSound('soundtrack1.mp3')" onmouseleave="stopSound()">
+            <div class="rating">8.5</div>
+        </a>
+
+        <a href="info.html" class="card" style="background-image: url('film2.jpg');"
+           onmouseenter="playSound('soundtrack2.mp3')" onmouseleave="stopSound()">
+            <div class="rating">9.1</div>
+        </a>
+
+        <!-- Добавьте другие карточки по мере необходимости -->
+
+        <button class="carousel-button right" onclick="scrollCarousel(1)">&#9654;</button>
+    </div>
+
+    <script>
+        let audio = new Audio();
+
+        function playSound(soundFile) {
+            audio.src = soundFile;
+            audio.play();
+        }
+
+        function stopSound() {
+            audio.pause();
+            audio.currentTime = 0;
+        }
+
+        function scrollCarousel(direction) {
+            const carousel = document.querySelector('.carousel');
+            const scrollAmount = 220;
+            carousel.scrollBy({
+                left: scrollAmount * direction,
+                behavior: 'smooth'
+            });
+        }
+    </script>
+</body>
+</html>

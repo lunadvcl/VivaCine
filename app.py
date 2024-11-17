@@ -1,18 +1,28 @@
-from flask import Flask, render_template, request, redirect, url_for, g, session, flash
-from werkzeug.security import generate_password_hash, check_password_hash
+from flask import Flask,jsonify,send_from_directory, render_template, request, redirect, url_for, g, session, flash
 import sqlite3
 import os
 from functools import wraps
 import json
 from datetime import datetime
+from werkzeug.security import check_password_hash, generate_password_hash
 
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your-secret-key'
 DATABASE = 'db.sqlite'
+UPLOAD_FOLDER = 'static/profile_pictures'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-# Функция для подключения к базе данных
+@app.after_request
+def add_ngrok_skip_header(response):
+    response.headers['ngrok-skip-browser-warning'] = 'true'
+    return response
+
 def get_db():
+    """
+    Функция для получения соединения с базой данных SQLite.
+    Она создаёт соединение, если его ещё нет, и обрабатывает ошибки.
+    """
     if '_database' not in g:
         try:
             g._database = sqlite3.connect(DATABASE)
@@ -20,6 +30,8 @@ def get_db():
             print("Ошибка подключения к базе данных:", e)
             return None
     return g._database
+
+
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
@@ -27,6 +39,7 @@ def login_required(f):
             return redirect(url_for('login'))  # Перенаправляем на страницу входа
         return f(*args, **kwargs)
     return decorated_function
+
 # Закрытие подключения при завершении запроса
 @app.teardown_appcontext
 def close_connection(exception):
@@ -34,12 +47,11 @@ def close_connection(exception):
     if db is not None:
         db.close()
 
-# Инициализация базы данных (создание таблиц)
 def init_db():
     with app.app_context():
         db = get_db()
         if db is None:
-            print("Не удалось подключиться к базе данных при инициализации.")
+            print("Database connection failed during initialization.")
             return
         cursor = db.cursor()
         try:
@@ -47,6 +59,7 @@ def init_db():
                                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                                 first_name TEXT NOT NULL,
                                 last_name TEXT NOT NULL,
+                                email TEXT NOT NULL UNIQUE,
                                 password TEXT NOT NULL,
                                 profile_picture TEXT
                               )''')
@@ -57,7 +70,7 @@ def init_db():
                                 rating REAL,
                                 description TEXT
                               )''')
-            cursor.execute('''CREATE TABLE IF NOT EXISTS messages (
+            cursor.execute('''CREATE TABLE IF NOT EXISTS Messages (
                                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                                 name TEXT NOT NULL,
                                 email TEXT NOT NULL,
@@ -65,15 +78,8 @@ def init_db():
                               )''')
             db.commit()
         except sqlite3.Error as e:
-            print("Ошибка инициализации базы данных:", e)
+            print("Database initialization error:", e)
 
-def login_required(f):
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        if 'user_id' not in session:
-            return redirect(url_for('login'))
-        return f(*args, **kwargs)
-    return decorated_function
 
 @app.route('/')
 def index():
@@ -107,33 +113,88 @@ def comedy():
 def drama():
     return render_template('drama.html')
 
-
-
 # Страница библиотеки
 @app.route('/library')
 def library():
     return render_template('library.html')
+# Путь к папке с изображениями
+POSTERS_FOLDER = "posters"
 
-# Страница "Для меня"
-@app.route('/personal')
-def personal():
-    return render_template('personal.html')
+# Пример данных о постерах
+posters = [
+    {"id": 1, "filename": "poster1.jpg", "title": "Movie Poster 1"},
+    {"id": 2, "filename": "poster2.jpg", "title": "Movie Poster 2"},
+    {"id": 3, "filename": "poster3.jpg", "title": "Movie Poster 3"},
+    {"id": 4, "filename": "poster4.jpg", "title": "Movie Poster 4"},
+    {"id": 5, "filename": "poster5.jpg", "title": "Movie Poster 5"},
+    {"id": 6, "filename": "poster6.jpg", "title": "Movie Poster 6"},
+    {"id": 7, "filename": "poster7.jpg", "title": "Movie Poster 7"},
+    {"id": 8, "filename": "poster8.jpg", "title": "Movie Poster 8"},
+    {"id": 9, "filename": "poster9.jpg", "title": "Movie Poster 9"},
+]
+
+@app.route('/api/posters', methods=['GET'])
+def get_posters():
+    """
+    Возвращает список постеров в формате JSON.
+    """
+    return jsonify(posters)
+
+@app.route('/posters/<filename>', methods=['GET'])
+def download_poster(filename):
+    """
+    Позволяет скачивать постер из папки POSTERS_FOLDER.
+    """
+    try:
+        return send_from_directory(POSTERS_FOLDER, filename, as_attachment=True)
+    except FileNotFoundError:
+        return jsonify({"error": "File not found"}), 404
+
+
 
 # Страница поиска
 @app.route('/search')
 def search():
     return render_template('search.html')
 
+
 @app.route('/movie/<int:movie_id>')
 @login_required
 def movie_details(movie_id):
+    """
+    Отображает информацию о фильме и добавляет его в историю просмотров.
+    """
     db = get_db()
     cursor = db.cursor()
+
+    # Получаем данные о фильме из таблицы Movie
     cursor.execute("SELECT * FROM Movie WHERE id = ?", (movie_id,))
     movie = cursor.fetchone()
+    if movie:
+        movie_info = {
+            'id': movie[0],
+            'title': movie[1],
+            'genre': movie[2],
+            'rating': movie[3],
+            'description': movie[4]
+        }
+        return render_template('movie_details.html', movie=movie_info)
+    else:
+        return "Movie not found", 404
+
     if movie is None:
         return "Movie not found", 404
+
+    # Добавляем запись в таблицу BrowsingHistory
+    watched_at = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    cursor.execute('''
+        INSERT INTO BrowsingHistory (user_id, movie_title, watched_at)
+        VALUES (?, ?, ?)
+    ''', (1, movie['title'], watched_at))  # Здесь user_id = 1 для примера
+    db.commit()
+
     return render_template('movie_details.html', movie=movie)
+
 
 @app.route('/la-casa-de-papel')
 @login_required
@@ -195,7 +256,10 @@ def Twilight():
 @login_required
 def Winx():
     return render_template('Winx.html')
-
+@app.route('/Animated')
+@login_required
+def Animated():
+    return render_template('Animated.html')
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -204,33 +268,39 @@ def register():
         last_name = request.form.get('last_name')
         email = request.form.get('email')
         password = request.form.get('password')
-        profile_picture = request.files.get('profile_picture')
 
-        if not all([first_name, last_name, email, password]):
-            flash("Все поля обязательны для заполнения.")
-            return render_template('register.html')
-
-        if profile_picture:
-            filename = os.path.join('static/uploads', profile_picture.filename)
-            profile_picture.save(filename)
-        else:
-            filename = None
+        # Проверка обязательных полей
+        if not first_name or not last_name or not email or not password:
+            return "Все поля обязательны для заполнения", 400
 
         hashed_password = generate_password_hash(password)
 
+        # Подключение к базе данных
         db = get_db()
+        if db is None:
+            return "Ошибка подключения к базе данных", 500
         cursor = db.cursor()
+
         try:
+            # Проверка, существует ли уже такой email
+            cursor.execute("SELECT * FROM User WHERE email = ?", (email,))
+            if cursor.fetchone():
+                return "Пользователь с таким email уже существует", 400
+
+            # Вставка нового пользователя
             cursor.execute('''
-                INSERT INTO User (first_name, last_name, email, password, profile_picture)
-                VALUES (?, ?, ?, ?, ?)
-            ''', (first_name, last_name, email, hashed_password, filename))
+                 INSERT INTO User (first_name, last_name, email, password)
+                 VALUES (?, ?, ?, ?)
+             ''', (first_name, last_name, email, hashed_password))
             db.commit()
+
         except sqlite3.Error as e:
-            flash("Ошибка регистрации.")
-            print(e)
+            print("Ошибка при регистрации пользователя:", e)
+            return "Ошибка регистрации", 500
+
         return redirect(url_for('login'))
     return render_template('register.html')
+
 
 # Login route
 @app.route('/login', methods=['GET', 'POST'])
@@ -276,17 +346,12 @@ def login():
 
     # Возвращаем шаблон при GET-запросе
     return render_template('login.html')
-
-# Logout route
 @app.route('/logout')
 def logout():
-    session.clear()  # Clear all session data
-    flash("Вы вышли из системы.")
+    session.clear()  # Clear session data
+    flash("Logged out successfully.")
     return redirect(url_for('login'))
 
-@app.route('/index')
-def home():
-    return render_template('index.html')
 
 @app.route('/profile')
 def profile():
@@ -295,18 +360,171 @@ def profile():
 
     db = get_db()
     cursor = db.cursor()
-    cursor.execute("SELECT first_name, last_name, email FROM User WHERE id = ?", (session['user_id'],))
+    cursor.execute("SELECT first_name, last_name, username, email, birth_date, registered_at, profile_picture FROM User WHERE id = ?", (session['user_id'],))
     user = cursor.fetchone()
 
     if user:
         user_info = {
-            'first_name': user[0],
-            'last_name': user[1],
-            'email': user[2]
+
+        'first_name': user[0],
+        'last_name': user[1],
+        'username': user[2],
+        'email': user[3],
+        'birth_date': user[4],
+        'registered_at': user[5],
+        'profile_picture': user[6] if user[6] else 'default.jpg'
+
         }
         return render_template('profile.html', user=user_info)
     else:
         return "Пользователь не найден", 404
+
+
+@app.route('/settings')
+def settings():
+    return render_template('settings.html')
+
+
+@app.route('/browsing_history')
+def browsing_history():
+    user_id = session.get('user_id')
+    if not user_id:
+        return redirect(url_for('login'))  # Если пользователь не авторизован, перенаправляем его на страницу входа
+
+    # Получаем историю просмотра текущего пользователя
+    db = get_db()
+    cursor = db.cursor()
+
+    # Извлекаем все записи из таблицы BrowsingHistory для текущего пользователя
+    cursor.execute('''
+        SELECT movie_title, watched_at FROM BrowsingHistory WHERE user_id = ?
+        ORDER BY watched_at DESC
+    ''', (user_id,))
+    movies = cursor.fetchall()
+
+    return render_template('history.html', movies=movies)
+
+
+def create_tables():
+    """
+    Создаёт таблицу BrowsingHistory, если её нет.
+    """
+    with app.app_context():
+        db = get_db()
+        cursor = db.cursor()
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS BrowsingHistory (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                user_id INTEGER NOT NULL,
+                movie_title TEXT NOT NULL,
+                watched_at TEXT NOT NULL
+            )
+        ''')
+        db.commit()
+
+# Вызов функции создания таблиц при запуске приложения
+create_tables()
+
+
+# Проверяем, существует ли папка, и если нет — создаём её
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
+
+@app.route('/edit_profile', methods=['GET', 'POST'])
+@login_required
+def edit_profile():
+    if 'user_id' not in session:  # Проверка, авторизован ли пользователь
+        return redirect(url_for('login'))
+
+    user_id = session['user_id']  # Получение текущего пользователя
+    db = get_db()
+    cursor = db.cursor()
+
+    if request.method == 'POST':
+
+        # Получение данных из формы
+        first_name = request.form.get('first_name')
+        last_name = request.form.get('last_name')
+        username = request.form['username']
+        email = request.form['email']
+        birth_date = request.form['birth_date']
+
+        profile_picture = request.files.get('profile_picture')
+        profile_picture_name = None
+
+        if profile_picture:
+            profile_picture_name = f"{user_id}_{profile_picture.filename}"
+            profile_picture.save(os.path.join(app.static_folder, 'profile_pictures', profile_picture_name))
+
+        # Обновление данных в базе данных
+        cursor.execute("""
+                    UPDATE User
+                    SET first_name = ?, last_name = ?, username = ?, email = ?, birth_date = ?, profile_picture = ?
+                    WHERE id = ?
+                """, (first_name, last_name, username, email, birth_date, profile_picture_name, user_id))
+        db.commit()
+
+        flash('Profile updated successfully!', 'success')
+        return redirect(url_for('profile'))
+
+
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM User WHERE id = ?", (user_id,))
+    user = cursor.fetchone()
+    return render_template('edit_profile.html', user=user)
+
+
+def add_user(first_name, last_name, username, email, birth_date=None, profile_picture=None):
+    conn = sqlite3.connect('database.db')
+    with conn:
+        conn.execute("""
+            INSERT INTO User (first_name, last_name, username, email, birth_date, profile_picture)
+            VALUES (?, ?, ?, ?, ?, ?);
+        """, (first_name, last_name, username, email, birth_date, profile_picture))
+    print("Пользователь добавлен!")
+
+def get_user(user_id):
+    conn = sqlite3.connect('database.db')
+    with conn:
+        user = conn.execute("SELECT * FROM User WHERE id = ?;", (user_id,)).fetchone()
+    return user
+
+def update_user(user_id, first_name=None, last_name=None, username=None, email=None, birth_date=None, profile_picture=None):
+    conn = sqlite3.connect('database.db')
+    with conn:
+        conn.execute("""
+            UPDATE User
+            SET first_name = COALESCE(?, first_name),
+                last_name = COALESCE(?, last_name),
+                username = COALESCE(?, username),
+                email = COALESCE(?, email),
+                birth_date = COALESCE(?, birth_date),
+                profile_picture = COALESCE(?, profile_picture)
+            WHERE id = ?;
+        """, (first_name, last_name, username, email, birth_date, profile_picture, user_id))
+    print("Профиль пользователя обновлен!")
+
+def delete_user(user_id):
+    conn = sqlite3.connect('database.db')
+    with conn:
+        conn.execute("DELETE FROM User WHERE id = ?;", (user_id,))
+    print("Пользователь удален!")
+
+
+@app.route('/delete_account', methods=['POST'])
+def delete_account():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
+    user_id = session['user_id']
+    db = get_db()
+    cursor = db.cursor()
+    cursor.execute("DELETE FROM User WHERE id = ?", (user_id,))
+    db.commit()
+
+    session.clear()  # Clear the session data
+    flash('Ваш аккаунт был удалён.', 'info')
+    return redirect(url_for('login'))
 
 
 
@@ -325,7 +543,6 @@ def show_users():
     cursor.execute("SELECT id, first_name, last_name, password FROM User")
     users = cursor.fetchall()
     return str(users)
-
 
 CHAT_FILE = 'chat_messages.json'
 # Страница для отображения сообщений
@@ -419,7 +636,36 @@ def save_message(sender, message, timestamp):
         file.write("\n")  # Добавляем новую строку после каждого сообщения
 
 
+@app.route('/leave_review', methods=['GET', 'POST'])
+def leave_review():
+    if request.method == 'POST':
+        content = request.form['content']
+        rating = request.form['rating']
+
+        if not content or not rating:
+            flash('Пожалуйста, заполните все поля!')
+            return redirect(url_for('leave_review'))
+
+        user_id = 1  # Здесь добавь реальную логику для получения ID текущего пользователя
+        movie_id = 1  # Здесь добавь реальный ID фильма
+
+        # Добавление отзыва
+        with sqlite3.connect('db.sqlite') as conn:
+            conn.execute('''
+                INSERT INTO review (content, rating, user_id, movie_id)
+                VALUES (?, ?, ?, ?)
+            ''', (content, rating, user_id, movie_id))
+            conn.commit()
+
+        flash('Отзыв успешно добавлен!')
+        return redirect(url_for('leave_review'))
+
+    return render_template('leave_review.html')
+
+
 if __name__ == '__main__':
     init_db()
-    app.run(host='localhost', port=5009, debug=True
+    create_tables()
+    app.run(host='localhost', port=5003, debug=True)
+
 

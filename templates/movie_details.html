@@ -1,0 +1,41 @@
+<!-- movie_details.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{{ movie[1] }}</h1> <!-- Название фильма -->
+    <p><strong>Жанр:</strong> {{ movie[2] }}</p> <!-- Жанр -->
+    <p><strong>Рейтинг:</strong> {{ movie[3] }}</p> <!-- Рейтинг -->
+    <p><strong>Описание:</strong> {{ movie[4] }}</p> <!-- Описание -->
+
+    <hr>
+
+    <h2>Отзывы</h2>
+    {% if reviews %}
+        <ul>
+            {% for review in reviews %}
+                <li>
+                    <p><strong>{{ review.user.username }}</strong> ({{ review.rating }}/5):</p>
+                    <p>{{ review.content }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Отзывов пока нет. Будьте первым!</p>
+    {% endif %}
+
+    {% if current_user.is_authenticated %}
+        <hr>
+        <h3>Добавить отзыв</h3>
+        <form action="{{ url_for('add_review', movie_id=movie[0]) }}" method="post">
+            <label for="content">Отзыв:</label><br>
+            <textarea name="content" id="content" rows="4" required></textarea><br><br>
+
+            <label for="rating">Рейтинг (1-5):</label><br>
+            <input type="number" name="rating" id="rating" min="1" max="5" required><br><br>
+
+            <button type="submit">Оставить отзыв</button>
+        </form>
+    {% else %}
+        <p>Пожалуйста, <a href="{{ url_for('login') }}">войдите</a>, чтобы оставить отзыв.</p>
+    {% endif %}
+{% endblock %}
