@@ -252,7 +252,7 @@ def login():
                 session['user_id'] = user[0]  # ID пользователя из первого столбца
                 session['username'] = user[1]  # Username из второго столбца
                 flash("Вы успешно вошли в систему.")
-                return redirect(url_for('chat'))  # Перенаправляем на страницу чата
+                return redirect(url_for('index'))  # Перенаправляем на страницу чата
 
             # Если логин или пароль неверны
             flash("Неверные учетные данные.")
