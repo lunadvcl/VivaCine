@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Genres - VivaCine</title>
     <link href="https://fonts.googleapis.com/css2?family=Lastra&display=swap" rel="stylesheet">
+    <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         /* General styles */
@@ -157,19 +158,19 @@
         <div class="genre-grid">
             <!-- Genre cards -->
             <div class="genre-card">
-                <a href="/la-casa-de-papel" class="card">
+                <a href="/action" class="card">
                     <img src="https://i.pinimg.com/originals/a8/2b/f2/a82bf2ad3c0dae2793c45c15e6d4f04e.gif" alt="Action">
                     <h3>Action</h3>
                 </a>
             </div>
             <div class="genre-card">
-                <a href="/kevin" class="card">
+                <a href="/comedy" class="card">
                     <img src="https://i.gifer.com/origin/58/5878bf609ce1cf463c9f20f4bae96f80_w200.gif" alt="Comedy">
                     <h3>Comedy</h3>
                 </a>
             </div>
             <div class="genre-card">
-                <a href="/russ" class="card">
+                <a href="/drama" class="card">
                     <img src="https://i.pinimg.com/originals/bc/e0/f3/bce0f32da537f74cac2d779099fb09d3.gif" alt="Drama">
                     <h3>Drama</h3>
                 </a>
@@ -219,6 +220,92 @@
         </div>
     </section>
 </main>
+<footer>
+    <div class="footer-content">
+
+        <div class="social-media">
+            <a href="https://www.facebook.com/?locale=ru_RU" class="social-icon"><i class="fab fa-facebook"></i></a>
+            <a href="https://x.com/?lang=ru" class="social-icon"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.instagram.com/" class="social-icon"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.youtube.com/" class="social-icon"><i class="fab fa-youtube"></i></a>
+        </div>
+    </div>
+    <div class="footer-buttons">
+        <a href="/chat" class="contact-button">Do you have any questions? Write to us</a>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2024 VivaCine. All rights reserved.</p>
+    </div>
+</footer>
+
+<style>
+    footer {
+        background-color: #000;
+        color: #fff;
+        padding: 30px 0;
+        font-family: 'Arial', sans-serif;
+        text-align: center; /* Center the footer content */
+    }
+
+    .footer-content {
+        display: flex;
+        justify-content: center; /* Center the content */
+        align-items: center;
+        margin-bottom: 20px;
+        flex-direction: column; /* Stack elements vertically */
+    }
+
+    .contacts p {
+        margin: 10px 0;
+        font-size: 15px;
+        font-weight: normal; /* Make the text normal weight */
+        pointer-events: none; /* Prevent text from being clickable */
+    }
+
+    .social-media {
+        display: flex;
+        gap: 20px;
+        margin-top: 20px;
+    }
+
+    .social-icon {
+        color: #fff;
+        font-size: 40px;
+        transition: color 0.3s ease;
+    }
+
+    .social-icon:hover {
+        color: #ff8c00; /* Hover color */
+    }
+
+    .footer-buttons {
+        margin-top: 20px;
+    }
+
+    .contact-button {
+        background-color: #020202;
+        color: #ffffff;
+        font-size: 16px;
+        font-weight: bold;
+        padding: 10px 20px;
+        border-radius: 30px;
+        text-decoration: none;
+        display: inline-block;
+        transition: all 0.3s ease;
+    }
+
+    .contact-button:hover {
+        background-color: #020202;
+        transform: scale(1.1);
+    }
+
+    .footer-bottom {
+        font-size: 14px;
+        opacity: 0.7;
+        margin-top: 20px;
+    }
+</style>
+
 
 </body>
 </html>
