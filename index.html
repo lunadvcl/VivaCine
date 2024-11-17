@@ -284,6 +284,30 @@
 
     </section>
 </main>
+<footer>
+    <div class="footer-content">
+        <div class="contacts">
+            <p>Телефон: +7 (123) 456-78-90</p>
+            <p>Email: support@vivacine.com</p>
+        </div>
+        <div class="social-media">
+            <a href="https://instagram.com" target="_blank">Instagram</a>
+            <a href="https://telegram.org" target="_blank">Telegram</a>
+            <a href="https://facebook.com" target="_blank">Facebook</a>
+        </div>
+        <div class="chat-link">
+            <a href="{{ url_for('chat') }}">Обратная связь</a>
+            {% if session.get('username') == 'admin' %}
+                <a href="{{ url_for('admin_chat') }}">Админ-панель</a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>© 2024 VivaCine Online Cinema</p>
+    </div>
+</footer>
+
 </body>
 </html>
+
 
