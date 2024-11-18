@@ -23,3 +23,27 @@ CREATE TABLE IF NOT EXISTS review (
     FOREIGN KEY(user_id) REFERENCES user(id),
     FOREIGN KEY(movie_id) REFERENCES movie(id)
 );
+
+CREATE TABLE reviews (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    content TEXT NOT NULL,
+    rating INTEGER NOT NULL,
+    username TEXT NOT NULL,
+    email TEXT NOT NULL,
+    movie_name TEXT NOT NULL,
+    date TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS review (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    content TEXT NOT NULL,
+    rating INTEGER NOT NULL,
+    user_id INTEGER NOT NULL,
+    movie_id INTEGER NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(user_id) REFERENCES User(id),
+    FOREIGN KEY(movie_id) REFERENCES Movie(id)
+);
+
+SELECT * FROM review;
+SELECT * FROM User;
+SELECT * FROM Movie;

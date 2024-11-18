@@ -19,6 +19,9 @@ def add_ngrok_skip_header(response):
     return response
 
 def get_db():
+    conn = sqlite3.connect(DATABASE)
+    conn.row_factory = sqlite3.Row  # Это важно для правильного извлечения данных
+    return conn
     """
     Функция для получения соединения с базой данных SQLite.
     Она создаёт соединение, если его ещё нет, и обрабатывает ошибки.
@@ -48,12 +51,9 @@ def close_connection(exception):
         db.close()
 
 def init_db():
-    with app.app_context():
-        db = get_db()
-        if db is None:
-            print("Database connection failed during initialization.")
-            return
-        cursor = db.cursor()
+    """Инициализация всех таблиц в базе данных."""
+    with sqlite3.connect(DATABASE) as conn:
+        cursor = conn.cursor()
         try:
             cursor.execute('''CREATE TABLE IF NOT EXISTS User (
                                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -76,9 +76,22 @@ def init_db():
                                 email TEXT NOT NULL,
                                 message TEXT NOT NULL
                               )''')
-            db.commit()
+            cursor.execute('''CREATE TABLE IF NOT EXISTS reviews (
+                                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                                content TEXT NOT NULL,
+                                rating INTEGER NOT NULL,
+                                username TEXT NOT NULL,
+                                email TEXT NOT NULL,
+                                movie_name TEXT NOT NULL,
+                                date TEXT NOT NULL
+                                )''')
+            conn.commit()
         except sqlite3.Error as e:
             print("Database initialization error:", e)
+
+# Инициализация базы данных при запуске приложения
+with app.app_context():
+    init_db()
 
 
 @app.route('/')
@@ -639,33 +652,107 @@ def save_message(sender, message, timestamp):
 @app.route('/leave_review', methods=['GET', 'POST'])
 def leave_review():
     if request.method == 'POST':
-        content = request.form['content']
-        rating = request.form['rating']
+        # Получаем данные из формы
+        content = request.form.get('content')
+        rating = request.form.get('rating')
+        print(f"Received content: {content}, rating: {rating}")
 
+        # Проверка на заполненность полей
         if not content or not rating:
             flash('Пожалуйста, заполните все поля!')
             return redirect(url_for('leave_review'))
 
-        user_id = 1  # Здесь добавь реальную логику для получения ID текущего пользователя
-        movie_id = 1  # Здесь добавь реальный ID фильма
+        try:
+            # Преобразуем рейтинг в число
+            rating = int(rating)
+            if rating < 1 or rating > 10:
+                flash('Рейтинг должен быть от 1 до 10!')
+                return redirect(url_for('leave_review'))
+        except ValueError:
+            flash('Рейтинг должен быть числом!')
+            return redirect(url_for('leave_review'))
 
-        # Добавление отзыва
-        with sqlite3.connect('db.sqlite') as conn:
-            conn.execute('''
-                INSERT INTO review (content, rating, user_id, movie_id)
-                VALUES (?, ?, ?, ?)
-            ''', (content, rating, user_id, movie_id))
-            conn.commit()
+        # Заглушка для user_id и movie_id (замените на реальную логику)
+        user_id = 1  # Получаем ID текущего пользователя из сессии
+        movie_id = 1  # Например, ID фильма (можно получить динамически)
 
-        flash('Отзыв успешно добавлен!')
-        return redirect(url_for('leave_review'))
+        try:
+            # Добавление отзыва в базу данных
+            with sqlite3.connect(DATABASE) as conn:
+                cursor = conn.cursor()
+                cursor.execute('''
+                    INSERT INTO review (content, rating, user_id, movie_id)
+                    VALUES (?, ?, ?, ?)
+                ''', (content, rating, user_id, movie_id))
+                conn.commit()
+            print("Review successfully added to the database.")
+            flash('Отзыв успешно добавлен!')
+            return redirect(url_for('leave_review'))  # Перенаправляем обратно на форму
+
+        except sqlite3.Error as e:
+            flash(f'Ошибка базы данных: {e}')
+            return redirect(url_for('leave_review'))
 
     return render_template('leave_review.html')
+
+@app.route('/reviews')
+def show_reviews():
+    try:
+        # Открытие соединения с базой данных
+        conn = get_db()
+        cursor = conn.cursor()
+
+        # Запрос к базе данных для получения всех отзывов
+        cursor.execute('''
+            SELECT review.content, review.rating, User.first_name, User.last_name, Movie.title, review.created_at
+            FROM review
+            JOIN User ON review.user_id = User.id
+            JOIN Movie ON review.movie_id = Movie.id
+            ORDER BY review.created_at DESC
+        ''')
+        reviews = cursor.fetchall()
+        conn.close()
+
+        print(f"Reviews fetched: {reviews}")
+
+        if not reviews:
+            flash('Нет отзывов!')
+            reviews = []
+
+    except sqlite3.Error as e:
+        flash(f'Ошибка базы данных: {e}')
+        reviews = []
+
+    return render_template('reviews.html', reviews=reviews)
+
+def get_reviews():
+    conn = sqlite3.connect(DATABASE)
+    cursor = conn.cursor()
+    cursor.execute('SELECT content, rating, username, email, movie_name, date FROM reviews')
+    reviews = cursor.fetchall()
+    conn.close()
+    return reviews
+
+
+def init_review_table():
+    conn = sqlite3.connect('your_database.db')  # Замените на имя вашей базы данных
+    cursor = conn.cursor()
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS review (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            content TEXT NOT NULL,
+            rating INTEGER NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    ''')
+    conn.commit()
+    conn.close()
 
 
 if __name__ == '__main__':
     init_db()
     create_tables()
+    init_review_table()
     app.run(host='localhost', port=5003, debug=True)
 
 
